@@ -1,0 +1,40 @@
+<h2 style="margin: 20px">Formulaire suivi</h2>
+
+
+
+<%= form_with url:'/postform', method: :post do |form| %>
+  <fieldset enable>
+    <legend>Fiche de suivi</legend>
+    <div class="mb-3">
+        <div>
+            <%= form.label :description, class: 'form-control' %>
+        </div>
+        <%= form.text_area(:description, size: '50x5')  %>
+    </div>
+    <div class="mb-3">
+        <div>
+            <%= form.label :date_envoi, class: 'form-control' %>
+        </div>
+        <%= form.date_field  :dateSending, class: 'form-control' %>
+        
+    </div>
+    
+    <div class="mb-3">
+      <div class="form-check">
+        <div>
+            <%= form.label :numero_DHL, class: 'form-control' %>
+        </div>
+        <%= form.text_field :dhl, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="mb-3">
+      <div class="form-check">
+        <div>
+            <%= form.label :status, class: 'form-control' %>
+        </div>
+        <%= form.text_field :status, class: 'form-control' %>
+      </div>
+    </div>
+        <%= form.submit "Create" %>
+  </fieldset>
+<% end %>
