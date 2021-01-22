@@ -12,6 +12,11 @@ class OrdersController < ApplicationController
     @trakingOrder = OrderTrack.new
   end
 
+  def addformView
+    @projects = params[:projects]
+    @trakingOrder = OrderTrack.new
+  end
+
   def postForm
 
     @projects = params[:projects]
