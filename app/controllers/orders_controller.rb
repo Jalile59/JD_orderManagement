@@ -8,11 +8,28 @@ class OrdersController < ApplicationController
   end
 
   def addform
+    @projects = params[:projects]
     @trakingOrder = OrderTrack.new
-    puts @trakingOrder
   end
 
   def postForm
-    puts params
+
+    @projects = params[:projects]
+
+    t = Time.now
+    
+    order = OrderTrack.new(
+      dateCreated: t.in_time_zone('Europe/Paris'), 
+      serialNum: params[:projects], 
+      description:params[:description],
+      dateSending: params[:dateSending],
+      user: User.find(session[:user_id])
+    )
+
+    order.save
+
+    redirect_back fallback_location: "/projects"
+
+    
   end
 end
