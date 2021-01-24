@@ -26,11 +26,12 @@ class OrdersController < ApplicationController
     
     order = OrderTrack.new(
       dateCreated: t.in_time_zone('Europe/Paris'), 
-      serialNum: params[:projects],
+      serialNum: params[:dhl],
       description:params[:description],
       dateSending: params[:dateSending],
       user: User.find(session[:user_id]),
-      addresse_id: params[:addressId],
+      addresses_id: params[:addressId],
+      project: params[:projects],
       status: params[:status]
     )
 
