@@ -14,21 +14,24 @@ class OrdersController < ApplicationController
 
   def addformView
     @projects = params[:projects]
-    @trakingOrder = OrderTrack.new
+    @address = Addresse.all
   end
 
   def postForm
 
-    @projects = params[:projects]
-
+    @projects = params
+    yml = params[:addressId].to_s.to_yaml
+    #abort( yml[])
     t = Time.now
     
     order = OrderTrack.new(
       dateCreated: t.in_time_zone('Europe/Paris'), 
-      serialNum: params[:projects], 
+      serialNum: params[:projects],
       description:params[:description],
       dateSending: params[:dateSending],
-      user: User.find(session[:user_id])
+      user: User.find(session[:user_id]),
+      addresse_id: params[:addressId],
+      status: params[:status]
     )
 
     order.save

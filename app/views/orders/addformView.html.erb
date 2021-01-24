@@ -17,14 +17,25 @@
       <div class="col-3">
         <%= form.text_field :dhl, class: 'form-control', placeholder:'Numéro DHL' %>
       </div>
+
+      <%= form.label :utilisateur, class: 'form-label' %>
+      <div class="col-3">
+        <%= form.text_field :user, class: 'form-control', placeholder:'user', value:User.find(session[:user_id]), :readonly => true %>
+      </div>
     </div>
     <div style="margin-top: 15px" class="row">
       <%= form.label :description, class: 'form-label' %>
       <div class="col-12">
         <%= form.text_area(:description, size: '50x5')  %>
       </div>
+
       <div class="col-3">
         <%= form.text_field :status, class: 'form-control', placeholder:'Status' %>
+      </div>
+      <div class="col-3">
+       <!-- <%= collection_select(:addressId, :addresse_id, Addresse.all, :id, :name, prompt: true) %> -->
+        <%=select_tag :addressId, options_from_collection_for_select(Addresse.all, :id, :name), prompt: "Selectionner adresse" %>
+
       </div>
     </div>
     <div style="margin-top: 15px" class="row">

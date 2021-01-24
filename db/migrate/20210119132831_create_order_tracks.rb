@@ -8,6 +8,7 @@ class CreateOrderTracks < ActiveRecord::Migration[5.2]
       t.string :status
       t.string :dateSending
       t.string :numberDHL
+      t.belongs_to :addresses
     end
   end
 end

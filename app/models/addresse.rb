@@ -1,4 +1,3 @@
 class Addresse < ActiveRecord::Base
-    belongs_to :orderTrack, dependent: :destroy
-
+  has_many :orderTracks
 end
