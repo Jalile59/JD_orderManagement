@@ -41,4 +41,21 @@ class OrdersController < ApplicationController
 
     
   end
+
+  def defxmlrequeteSlectform
+    field = params[:field]
+    data  = params[:data]
+
+    if field == "codearticle"
+      @device = Device.where(codearticle :data)
+    elsif field == "name"
+      @device = Device.where(name :data)
+    elsif field == "designation"
+      @device = Device.where(designation: data)
+    end
+    #abort(field) 
+    render json: @device
+
+  end
+
 end

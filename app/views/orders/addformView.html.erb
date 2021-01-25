@@ -1,6 +1,8 @@
 <% content_for :header_tags do %>
-  <%= stylesheet_link_tag 'bootstrap', :plugin => 'redmine_jd_order_management' %>
-  <%= javascript_include_tag 'bootstrap', :plugin => 'redmine_jd_order_management' %>
+  <%= stylesheet_link_tag 'bootstrap', :plugin => 'jd_order_management' %>
+  <%= javascript_include_tag 'bootstrap', :plugin => 'jd_order_management' %>
+  <%= javascript_include_tag 'addformView', :plugin => 'jd_order_management' %>
+
 
 <% end %>
 
@@ -35,7 +37,24 @@
       <div class="col-3">
        <!-- <%= collection_select(:addressId, :addresse_id, Addresse.all, :id, :name, prompt: true) %> -->
         <%=select_tag :addressId, options_from_collection_for_select(Addresse.all, :id, :name), prompt: "Selectionner adresse" %>
-
+      </div>
+    </div>
+    <div style="margin-top: 15px" class="row">
+      <div class="col-3">
+        <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :codearticle), prompt: "Module_codeArticle", "data" => "codearticle"  %>
+      </div>
+        <div class=col-3>
+          <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :name), prompt: "Module_Designation", "data" => "name" %>
+        </div>
+        <div class=col-3>
+          <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :name), prompt: "Module", "data" => "designation", :onchange => "test();" %>
+        </div>
+        <div class="col-2">
+          <%= form.number_field :dhl, class: 'form-control', placeholder:'Quantitées' %>
+        </div>
+        <div class="col-1">
+         <button id="addModule" type="button" >+</button>
+        </div>
       </div>
     </div>
     <div style="margin-top: 15px" class="row">
@@ -43,7 +62,6 @@
         <%= form.submit "Create" %>
       </div>
     </div>
-
   </div>
 
 
