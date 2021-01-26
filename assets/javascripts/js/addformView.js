@@ -1,8 +1,66 @@
-alert('test');
 
-$('#device').change(function(){
-    alert('test');
-    console.log("hi")
-});
+function test(data){
+    id = data['value'];
+    if(id)
+    {
+    ajxfunctionGetData(id)
 
-console.log("hi")
+    }else{
+        console.log('id null');
+    }
+    initField();
+}
+
+
+
+function addHtmlinputSelect(data){
+
+    //console.log(document.getElementById('device'));
+    console.log(data);
+    
+     $("[data=codearticle]").val(data['id']);
+     $("[data=name]").val(data['id']);
+     $("[data=designation]").val(data['id']);
+}
+
+function initField()
+{
+     $("[data=codearticle]").val($("[data=codearticle] option:first"));
+     $("[data=name]").val($("[data=name] option:first"));
+     $("[data=designation]").val($("[data=codearticle] option:first"));
+}
+
+function addinputElement()
+{
+    data ="test";
+    dataCodeArticle = $("[data=codearticle]").find(":selected").text();
+    dataName = $("[data=name]").find(":selected").text()
+    dataQuantity = $("[data=quantity]").val();
+
+    elem = "<div style='margin-top: 15px' class='row'> <div class='col-3'> <input class='form-control' type='text' name='codearticle[]' value="+ dataCodeArticle+" readonly> </div><div class='col-3'> <input class='form-control' type='text' name='name[]' value="+dataName+" readonly> </div> <div class='col-3'> <input class='form-control' type='number' value='"+ dataQuantity+ "' placeholder='Quantity' name='quantity[]' readonly> </div> <div class='col-1'><button type='button'>+</button> </div> </div> ";
+    $('#inputs').append(elem);
+
+}
+
+function ajxfunctionGetData(id)
+{
+    $.ajax({
+        url : '/orders/defxmlrequeteSlectform/'+id,
+        type : 'GET',
+        dataType : 'html',
+        success : function(data){
+            dataToObject = JSON.parse(data)
+            addHtmlinputSelect(dataToObject);    
+        
+        },
+    
+        error : function(resultat, statut, erreur){
+          
+        },
+    
+        complete : function(resultat, statut){
+    
+        }
+    
+     });
+}

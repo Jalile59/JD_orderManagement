@@ -40,22 +40,24 @@
       </div>
     </div>
     <div style="margin-top: 15px" class="row">
-      <div class="col-3">
-        <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :codearticle), prompt: "Module_codeArticle", "data" => "codearticle"  %>
+      <div class="col-2">
+        <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :codearticle), prompt: "Module_codeArticle", "data" => "codearticle", :onchange => "test(this);"  %>
       </div>
-        <div class=col-3>
-          <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :name), prompt: "Module_Designation", "data" => "name" %>
+        <div id="code" class=col-2>
+          <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :name), prompt: "Module_Designation", "data" => "name", :onchange => "test(this);" %>
         </div>
-        <div class=col-3>
-          <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :name), prompt: "Module", "data" => "designation", :onchange => "test();" %>
+        <div class=col-2>
+          <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :designation), prompt: "Module", "data" => "designation", :onchange => "test(this);" %>
         </div>
         <div class="col-2">
-          <%= form.number_field :dhl, class: 'form-control', placeholder:'Quantitées' %>
+          <%= form.number_field :dhl, class: 'form-control', placeholder:'Quantitées', data:'quantity' %>
         </div>
         <div class="col-1">
-         <button id="addModule" type="button" >+</button>
+         <button id="addModule" type="button" onclick="addinputElement()">-</button>
         </div>
       </div>
+    </div>
+    <div style="margin-top: 15px" id="inputs" >
     </div>
     <div style="margin-top: 15px" class="row">
       <div>

@@ -20,8 +20,7 @@ class OrdersController < ApplicationController
   def postForm
 
     @projects = params
-    yml = params[:addressId].to_s.to_yaml
-    #abort( yml[])
+    abort(@projects[:codearticle][0])
     t = Time.now
     
     order = OrderTrack.new(
@@ -43,16 +42,9 @@ class OrdersController < ApplicationController
   end
 
   def defxmlrequeteSlectform
-    field = params[:field]
-    data  = params[:data]
+    data  = params[:id]
 
-    if field == "codearticle"
-      @device = Device.where(codearticle :data)
-    elsif field == "name"
-      @device = Device.where(name :data)
-    elsif field == "designation"
-      @device = Device.where(designation: data)
-    end
+    @device = Device.find(data)
     #abort(field) 
     render json: @device
 
