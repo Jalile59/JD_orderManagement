@@ -6,37 +6,38 @@
 
 <% end %>
 
-<h2 style="margin: 20px">Formulaire suivi</h2>
+<h2 style="margin: 20px">Edition Formulaire suivi</h2>
 <button style="margin-bottom: 20px" type="button" class="btn btn-light">Retour</button>
-
-<%= form_with url:putform_path(@projects), method: :post do |form| %>
+<%= form_with url:putform_path(:project), method: :post do |form| %>
   <div class="form-row">
     <div class="row">
       <%= form.label :Date_envoi, class: 'form-label' %>
       <div class="col-3">
-        <%= form.date_field  :dateSending, class: 'form-control' %>
+        <%= form.date_field  :dateSending, class: 'form-control', value: @ord.dateSending %>
       </div>
       <div class="col-3">
-        <%= form.text_field :dhl, class: 'form-control', placeholder:'Numéro DHL' %>
+        <%= form.text_field :dhlnumber , class: 'form-control', placeholder:'Numéro DHL', value: @ord.numberDHL %>
       </div>
-
       <%= form.label :utilisateur, class: 'form-label' %>
       <div class="col-3">
-        <%= form.text_field :user, class: 'form-control', placeholder:'user', value:User.find(session[:user_id]), :readonly => true %>
+        <%= form.text_field :user, class: 'form-control', placeholder:'user', value:@ord.user, :readonly => true %>
+      </div>
+      <div class="col-3">
+        <%= form.text_field :idorder, class: 'form-control', placeholder:'user', value: @ord.id, :readonly => true %>
       </div>
     </div>
     <div style="margin-top: 15px" class="row">
       <%= form.label :description, class: 'form-label' %>
       <div class="col-12">
-        <%= form.text_area(:description, size: '50x5')  %>
+        <%= form.text_area(:description, size: '50x5', value: @ord.description)  %>
       </div>
 
       <div class="col-3">
-        <%= form.text_field :status, class: 'form-control', placeholder:'Status' %>
+        <%= form.text_field :status, class: 'form-control', placeholder:'Status', value: @ord.status %>
       </div>
       <div class="col-3">
        <!-- <%= collection_select(:addressId, :addresse_id, Addresse.all, :id, :name, prompt: true) %> -->
-        <%=select_tag :addressId, options_from_collection_for_select(Addresse.all, :id, :name), prompt: "Selectionner adresse" %>
+        <%=select_tag :addressId, options_from_collection_for_select(Addresse.all, :id, :name, @ord.id),   prompt: "Selectionner adresse" %>
       </div>
     </div>
     <div style="margin-top: 15px" class="row">
@@ -58,6 +59,22 @@
       </div>
     </div>
     <div style="margin-top: 15px" id="inputs" >
+          <% @devTrack.each do |deVices| %>
+    <div id="<%= deVices.id %>" style='margin-top: 15px' class='row'> 
+      <div class='col-3'> 
+        <input class='form-control' type='text'  value="<%= Device.find(deVices.device_id).codearticle %>" readonly> 
+      </div>
+      <div class='col-3'> 
+        <input class='form-control' type='text'  value="<%= Device.find(deVices.device_id).name %>" readonly> 
+      </div> 
+      <div class='col-3'> 
+        <input class='form-control' type='number' value="<%= deVices.quantity %>" placeholder='Quantity'  readonly> 
+      </div> 
+      <div class='col-1'>
+        <button  type='button' onclick='deletedDeviceOrder(<%= deVices.id %>)'>-</button> 
+      </div> 
+      </div>
+      <% end %> 
     </div>
     <div style="margin-top: 15px" class="row">
       <div>

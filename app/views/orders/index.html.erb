@@ -29,9 +29,9 @@
       <td><%= orderTrack.dateCreated %></td>
       <td><%= orderTrack.dateSending %></td>
       <td><%= orderTrack.description %></td>
-      <td><%= orderTrack.addresses_id %></td>
+      <td><%= Addresse.find(orderTrack.addresses_id).name %></td>
       <td><%= orderTrack.status %></td>
-      <td>--------</td>
+      <td><a href="<%= editAddviewForm_path(orderTrack.id,  @project) %>" >edit</a></td>
     </tr>
   </tbody>
   <% end %>

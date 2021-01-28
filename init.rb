@@ -7,6 +7,6 @@ Redmine::Plugin.register :jd_order_management do
   author_url 'http://example.com/about'
 
   permission :OrderTrack, { orders: [:index] }, public: true
-  menu :project_menu , :OrderTrack, { controller: 'orders', action: 'index' }, caption: 'Suivi commande', after: :activity, param: :project_id
+  menu :project_menu , :OrderTrack, { controller: 'orders', action: 'index' }, caption: 'Suivi piéces/SAV', after: :activity, param: :project_id
 
 end

@@ -1,5 +1,5 @@
 class Device < ActiveRecord::Base
     belongs_to :orderTrack, dependent: :destroy
-
-    validates :description, presence: true
+    has_many :deviceBytracks
+   # validates :description, presence: true
 end
