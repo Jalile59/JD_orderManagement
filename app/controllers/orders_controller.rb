@@ -1,7 +1,14 @@
 class OrdersController < ApplicationController
 
+ # before_action :find_project, :authorize, only: [:index]
+
   def index
     @project = Project.find(params[:project_id])
+
+    @listeOrder = OrderTrack.all()
+  end
+
+  def indexAdmin
 
     @listeOrder = OrderTrack.all()
   end
