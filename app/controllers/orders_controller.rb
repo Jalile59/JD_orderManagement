@@ -5,7 +5,8 @@ class OrdersController < ApplicationController
   def index
     @project = Project.find(params[:project_id])
 
-    @listeOrder = OrderTrack.all()
+
+    @listeOrder = OrderTrack.where(project: params[:project_id]).all
   end
 
   def indexAdmin
