@@ -1,12 +1,12 @@
 class OrdersController < ApplicationController
 
- # before_action :find_project, :authorize, only: [:index]
+  #before_action :find_project, :authorize, only: [:index]
+  before_action :checkuserAllowProjectOrders
 
   def index
     @project = Project.find(params[:project_id])
-
-
     @listeOrder = OrderTrack.where(project: params[:project_id]).all
+
   end
 
   def indexAdmin
@@ -124,6 +124,30 @@ class OrdersController < ApplicationController
 
     render json: iddeviceOrder
 
+  end
+
+  def checkuserAllowProjectOrders
+  
+    userId = User.find(session[:user_id])
+    #userId = User.find(5)
+    @project = Project.find(params[:project_id])
+
+    if userId.admin 
+      
+    else
+      projectCurrent = Project.where(name:params[:project_id]).last
+      userAllow = Member.where(user_id: userId.id, project_id: projectCurrent.id).first
+
+      #abort(userAllow.id.to_s)
+      isOrderIn = Tools.new("g").checkIfRoleIsAllowProject(MemberRole.find(userAllow.id).id)
+
+      #abort(isOrderIn)
+      if(!userAllow == nil or !isOrderIn )
+        render_404
+      end
+
+    end
+    
   end
 
 end
