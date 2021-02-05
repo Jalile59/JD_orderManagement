@@ -10,15 +10,16 @@ class Tools
 
         role = Role.find(idRole.role_id)
         roles = role.permissions
-        #abort(role.permissions.to_s)
-
+        
+        puts roles
         roles.each {|n|
-        if n == 'orders'
+            
+        if n.eql?("orders")
             return true
         end
-        
+
         }
-        return false
+        return roles.include? 'orders'
     end
 
     

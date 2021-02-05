@@ -141,7 +141,7 @@ class OrdersController < ApplicationController
       #abort(userAllow.id.to_s)
       isOrderIn = Tools.new("g").checkIfRoleIsAllowProject(MemberRole.find(userAllow.id).id)
 
-      #abort(isOrderIn)
+      abort(isOrderIn.inspect)
       if(!userAllow == nil or !isOrderIn )
         render_404
       end
