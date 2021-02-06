@@ -7,6 +7,7 @@ class OrdersController < ApplicationController
     @project = Project.find(params[:project_id])
     @listeOrder = OrderTrack.where(project: params[:project_id]).all
 
+
   end
 
   def indexAdmin
@@ -17,12 +18,12 @@ class OrdersController < ApplicationController
   def addform
     @project = Project.find(params[:project_id])
 
-    @projects = params[:projects]
+    @projects = params[:project_id]
     @trakingOrder = OrderTrack.new
   end
 
   def addformView
-    @projects = params[:projects]
+    @projects = params[:project_id]
     @address = Addresse.all
   end
 
@@ -55,7 +56,7 @@ class OrdersController < ApplicationController
         dateSending: params[:dateSending],
         user: User.find(session[:user_id]),
         addresses_id: params[:addressId],
-        project: params[:projects],
+        project: params[:project_id],
         status: params[:status]
       )
   
@@ -109,12 +110,12 @@ class OrdersController < ApplicationController
 
   def editAddviewForm
     idorder = params[:id]
-    project = params[:projects]
+    @project = Project.find(params[:project_id])
     @ord = OrderTrack.find(idorder)
 
     @devTrack = DeviceBytrack.where(orderTrack_id: @ord.id).all
 
-    #abort(@ord.dateSending)
+    #abort(@devTrack)
 
   end
 
@@ -130,18 +131,18 @@ class OrdersController < ApplicationController
   
     userId = User.find(session[:user_id])
     #userId = User.find(5)
-    @project = Project.find(params[:project_id])
+    #abort(params.to_s)
 
     if userId.admin 
       
     else
+      @project = Project.find(params[:project_id])
       projectCurrent = Project.where(name:params[:project_id]).last
       userAllow = Member.where(user_id: userId.id, project_id: projectCurrent.id).first
 
       #abort(userAllow.id.to_s)
       isOrderIn = Tools.new("g").checkIfRoleIsAllowProject(MemberRole.find(userAllow.id).id)
 
-      abort(isOrderIn.inspect)
       if(!userAllow == nil or !isOrderIn )
         render_404
       end
