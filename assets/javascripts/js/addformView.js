@@ -1,5 +1,5 @@
 
-function test(data){
+function fileupdataInInput(data){
     id = data['value'];
     if(id)
     {
@@ -43,8 +43,9 @@ function addinputElement()
 
 }
 
-function ajxfunctionGetData(id)
+function ajxfunctionGetData(id, idproject)
 {
+
     $.ajax({
         url : '/orders/defxmlrequeteSlectform/'+id,
         type : 'GET',

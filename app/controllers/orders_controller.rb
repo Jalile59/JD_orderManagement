@@ -2,6 +2,9 @@ class OrdersController < ApplicationController
 
   #before_action :find_project, :authorize, only: [:index]
   before_action :checkuserAllowProjectOrders
+  skip_before_action :checkuserAllowProjectOrders, only: [:defxmlrequeteSlectform]
+
+
 
   def index
     @project = Project.find(params[:project_id])
