@@ -8,9 +8,15 @@ class OrdersController < ApplicationController
 
   def index
     @project = Project.find(params[:project_id])
-    @listeOrder = OrderTrack.where(project: params[:project_id]).all
+    #    @listeOrder = OrderTrack.where(project: params[:project_id]).all
 
+    if params[:page].nil?
+      params[:page] = 1
+    end
 
+    @listeOrder = Paginationmanager.new().paginationOrders( params[:project_id], params[:page])
+
+    #abort(@listeOrder.count)
   end
 
   def indexAdmin
