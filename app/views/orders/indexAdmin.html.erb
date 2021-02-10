@@ -7,7 +7,11 @@
 <% end %>
 <h2>Suivi commandes</h2>
 <%# User.current.inspect %>
-<a href="#" type="button" class="btn btn-light">+ création</a>
+<a href="<%= putformViewAdmin_path(nil) %>" type="button" class="btn btn-light">+ création</a>
+<a href="<%= putformViewAdmin_path(nil) %>" type="button" class="btn btn-light">Gestion Adresses</a>
+<a href="<%= modules_path() %>" type="button" class="btn btn-light">Modules</a>
+
+
 
 <table class="table">
   <thead class="thead-dark">
@@ -31,8 +35,8 @@
       <td><%= orderTrack.dateSending %></td>
       <td><%= orderTrack.description %></td>
       <td><%= Addresse.find(orderTrack.addresses_id).name %></td>
-      <td><%= orderTrack.status %></td>
-      <td><a href="#" >edit</a></td>
+      <td><%= StatusOrder.find(orderTrack.statusOrders_id).name %></td>
+      <td><a href="<%= editAddviewForm_path(orderTrack.id,  orderTrack.project) %>" >edit</a></td>
     </tr>
   </tbody>
   <% end %>

@@ -1,0 +1,55 @@
+<!-- CSS only -->
+<!-- JavaScript Bundle with Popper -->
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'bootstrap', :plugin => 'jd_order_management' %>
+    <%= javascript_include_tag 'bootstrap', :plugin => 'jd_order_management' %>
+
+<% end %>
+<h2>Modules</h2>
+<nav>
+    <a href="<%= putformViewAdmin_path(nil) %>" type="button" class="btn btn-light">+ création</a>
+    <a href="<%= putformViewAdmin_path(nil) %>" type="button" class="btn btn-light">Gestion Adresses</a>
+    <a href="<%= modules_path() %>" type="button" class="btn btn-light">Modules</a>
+</nav>
+
+    <div class="row container-fluid">
+        <div class="col-6">
+            <%= form_with url:putform_path(@projects), method: :post do |form| %>
+                    <div style="margin-top: 10px" class="col-2">
+                        <%= form.text_field :codearticle, class: 'form-control', placeholder:'Code Article' %>
+                    </div>
+                    <div style="margin-top: 10px" class="col-3">
+                        <%= form.text_field :codearticle, class: 'form-control', placeholder:'Code Article' %>
+                    </div>
+                    <div style="margin-top: 10px" class="col-3">
+                        <%= form.text_field :codearticle, class: 'form-control', placeholder:'Code Article' %>
+                    </div>
+
+                    <button style="margin-top: 10px" type="submit" class="btn  mb-2">validez</button>
+            <% end %> 
+        </div>
+    <div>
+
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">codeArticle</th>
+      <th scope="col">designations</th>
+      <th scope="col">numéro module</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <% @module.each do |mod| %>
+  <tbody>
+    <tr>
+      <td><%= mod.id %></td>
+      <td><%= mod.codearticle %></td>
+      <td><%= mod.name %></td>
+      <td><%= mod.designation %></td>
+      <td><a href="#" >Del</a></td>
+    </tr>
+  </tbody>
+  <% end %>
+</table>

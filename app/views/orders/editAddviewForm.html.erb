@@ -32,22 +32,22 @@
       </div>
 
       <div class="col-3">
-        <%= form.text_field :status, class: 'form-control', placeholder:'Status', value: @ord.status %>
+        <%=select_tag :status, options_from_collection_for_select(StatusOrder.all, :id, :name, @ord.statusOrders_id),   prompt: "Selectionner status" %>
       </div>
       <div class="col-3">
        <!-- <%= collection_select(:addressId, :addresse_id, Addresse.all, :id, :name, prompt: true) %> -->
-        <%=select_tag :addressId, options_from_collection_for_select(Addresse.all, :id, :name, @ord.id),   prompt: "Selectionner adresse" %>
+        <%=select_tag :addressId, options_from_collection_for_select(Addresse.all, :id, :name, @ord.addresses_id),   prompt: "Selectionner adresse" %>
       </div>
     </div>
     <div style="margin-top: 15px" class="row">
       <div class="col-2">
-        <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :codearticle), prompt: "Module_codeArticle", "data" => "codearticle", :onchange => "test(this);"  %>
+        <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :codearticle), prompt: "Module_codeArticle", "data" => "codearticle", :onchange => "fileupdataInInput(this);"  %>
       </div>
         <div id="code" class=col-2>
-          <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :name), prompt: "Module_Designation", "data" => "name", :onchange => "test(this);" %>
+          <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :name), prompt: "Module_Designation", "data" => "name", :onchange => "fileupdataInInput(this);" %>
         </div>
         <div class=col-2>
-          <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :designation), prompt: "Module", "data" => "designation", :onchange => "test(this);" %>
+          <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :designation), prompt: "Module", "data" => "designation", :onchange => "fileupdataInInput(this);" %>
         </div>
         <div class="col-2">
           <%= form.number_field :dhl, class: 'form-control', placeholder:'Quantitées', data:'quantity' %>
@@ -58,15 +58,19 @@
       </div>
     </div>
     <div style="margin-top: 15px" id="inputs" >
-          <% @devTrack.each do |deVices| %>
+          <%= @devTrack.each do |deVices| %>
     <div id="<%= deVices.id %>" style='margin-top: 15px' class='row'> 
-      <div class='col-3'> 
+
+      <div class='col-2'> 
         <input class='form-control' type='text'  value="<%= Device.find(deVices.device_id).codearticle %>" readonly> 
       </div>
-      <div class='col-3'> 
+      <div class='col-2'> 
         <input class='form-control' type='text'  value="<%= Device.find(deVices.device_id).name %>" readonly> 
       </div> 
-      <div class='col-3'> 
+      <div class='col-2'> 
+        <input class='form-control' type='text'  value="<%= deVices.serial %>" readonly> 
+      </div> 
+      <div class='col-2'> 
         <input class='form-control' type='number' value="<%= deVices.quantity %>" placeholder='Quantity'  readonly> 
       </div> 
       <div class='col-1'>
@@ -81,6 +85,5 @@
       </div>
     </div>
   </div>
-
 
 <% end %>

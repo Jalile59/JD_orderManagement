@@ -15,13 +15,13 @@ class Paginationmanager
 
   def pageMax(projectid, limitBypage =30)
 
-    if projectId.eql?('all')
+    if projectid.eql?('all')
       orderQuantity = OrderTrack.count
     else
-       orderQuantity = OrderTrack.where(project: projectId).count
+       orderQuantity = OrderTrack.where(project: projectid).count
     end
 
-    return (orderQuantity / limitBypage).round(half: :up)
+    return ((orderQuantity / limitBypage).round(half: :up)) +1
   end
 
 

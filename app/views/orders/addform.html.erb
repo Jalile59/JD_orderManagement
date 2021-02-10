@@ -9,7 +9,7 @@
 
     <div class="row">
 
-        <%= form_with url:putform_path(@projects), method: :post do |form| %>
+        <%= form_with url:putform_path(), method: :post do |form| %>
         <fieldset enable>
             <legend>Fiche de suivi</legend>
 
@@ -41,7 +41,7 @@
                     <%= form.text_field :status, class: 'form-control' %>
                 </div>
             </div>
-
+    
             <div class="mb-3">
                 <div class="form-check">
                     <label>

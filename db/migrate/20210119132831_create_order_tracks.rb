@@ -5,11 +5,11 @@ class CreateOrderTracks < ActiveRecord::Migration[5.2]
       t.string :serialNum
       t.string :user
       t.string :description
-      t.string :status
       t.string :dateSending
       t.string :numberDHL
       t.string :project
       t.belongs_to :addresses
+      t.belongs_to :statusOrders
     end
   end
 end

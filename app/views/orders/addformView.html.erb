@@ -31,8 +31,20 @@
         <%= form.text_area(:description, size: '50x5', required: true )  %>
       </div>
 
-      <div class="col-3">
-        <%= form.text_field :status, class: 'form-control', placeholder:'Status', required: true  %>
+      <div class="row">
+        <div class="col-3" >
+        <% if @error['file'] == 1 %>
+         <div class="invalid-feedback">
+          fichier invalide
+          </div>
+        <% end %>
+        <%= form.file_field :fileOrd %>
+
+        </div>
+      </div>
+
+      <div class="col-2">
+        <%=select_tag :status, options_from_collection_for_select(StatusOrder.all, :id, :name), prompt: "Selectionner status", required: true  %>
       </div>
       <div class="col-2">
        <!-- <%= collection_select(:addressId, :addresse_id, Addresse.all, :id, :name, prompt: true) %> -->

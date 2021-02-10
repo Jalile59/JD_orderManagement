@@ -1,9 +1,7 @@
 
 class Tools
 
-    def initialize(message)
-        @message = message
-      end
+
 
     def checkIfRoleIsAllowProject(idmebreRole)
         idRole = MemberRole.find(idmebreRole)
@@ -20,6 +18,16 @@ class Tools
 
         return roles.include? 'orders'
     end
+
+    def checkUpload(uploaded_io)
+
+        if(uploaded_io.size > 800000)
+            return false           
+        end
+         
+    end
+
+
 
     
 end
