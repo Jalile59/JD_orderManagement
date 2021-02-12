@@ -45,11 +45,13 @@ function addinputElement()
 
 function ajxfunctionGetData(id, idproject)
 {
+    data = new FormData(); 
 
     $.ajax({
         url : '/ajax/defxmlrequeteSlectform/'+id,
-        type : 'GET',
-        dataType : 'html',
+        type : 'POST',
+        data: data,
+        dataType : 'json',
         success : function(data){
             dataToObject = JSON.parse(data)
             addHtmlinputSelect(dataToObject);    

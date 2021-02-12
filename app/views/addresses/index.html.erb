@@ -7,20 +7,19 @@
 
 
 <% end %>
-<h2>Modules</h2>
+<h2>Adresses</h2>
 <nav>
     <a href="<%= putformViewAdmin_path(nil) %>" type="button" class="btn btn-light">+ création</a>
-    <a href="<%= putformViewAdmin_path(nil) %>" type="button" class="btn btn-light">Gestion Adresses</a>
-    <a href="<%= device_path() %>" type="button" class="btn btn-light">Modules</a>
+    <a href="<%= addresses_path() %>" type="button" class="btn btn-light">Gestion Adresses</a>
+    <a href="<%= devices_path() %>" type="button" class="btn btn-light">Modules</a>
 </nav>
 
     <div class="box">
         <div class="col-6">
-            <%= form_for @device  do |form| %>
+            <%= form_for @addresse  do |form| %>
                     <div style="margin-top: 10px"  class="inline">
-                        <%= form.text_field :codearticle, placeholder:'Code Article' %>
-                        <%= form.text_field :name, placeholder:'designation' %>
-                        <%= form.text_field :designation, placeholder:'nomenclature' %>
+                        <%= form.text_field :name, placeholder:'Nom' %>
+                        <%= form.text_field :localisation, placeholder:'Adresse' %>
                         <button id="formModuleSave" style="margin-top: 10px" type="submit" class="btn  mb-2" onclick="eventSaveModule()">save</button>
                     </div>
             <% end %> 
@@ -32,20 +31,20 @@
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
-      <th scope="col">codeArticle</th>
-      <th scope="col">designations</th>
-      <th scope="col">nomenclature</th>
+      <th scope="col">nom</th>
+      <th scope="col">Adresses</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
-  <% Device.all.each do |mod| %>
+  <% Addresse.all.each do |mod| %>
   <tbody>
     <tr id="row_<%=mod.id%>">
       <td><%= mod.id %></td>
-      <td><%= mod.codearticle %></td>
       <td><%= mod.name %></td>
-      <td><%= mod.designation %></td>
-      <td><a href="<% device_path(mod.id) %>" data-confirm="le module va etre supprimé" data-method="DELETE">Supprimer</a></td>
+      <td><%= mod.localisation %></td>
+      <td><%= link_to "Supprimer", address_path(mod),
+                  method: :delete,
+                  data: { confirm: "etes vous sûr?" } %></td>
     </tr>
   </tbody>
   <% end %>

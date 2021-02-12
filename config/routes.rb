@@ -12,4 +12,6 @@ get 'ajax/defxmlrequeteSlectform/:id',                  to: 'orders#defxmlrequet
 get 'orders/fixtures',                                  to: 'orders#fixtures',                  as: 'fixtures'
 get 'orders/editAddviewForm/:id/:project_id',           to: 'orders#editAddviewForm',           as:'editAddviewForm'
 get 'orders/editAddviewForm/deleded/deviceOrders/:id',  to: 'orders#delAjaxrequet',             as:'deletedDeviceOrder'
-get 'modules',                                           to: 'modules#index',                     as: 'modules'
+#get 'devices',                                           to: 'devices#index',                    as: 'device'
+resources :devices
+resources :addresses
