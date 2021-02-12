@@ -187,7 +187,7 @@ class OrdersController < ApplicationController
       userAllow = Member.where(user_id: userId.id, project_id: projectCurrent.id).first
 
       #abort(userAllow.id.to_s)
-      isOrderIn = Tools.new("g").checkIfRoleIsAllowProject(MemberRole.find(userAllow.id).id)
+      isOrderIn = Tools.new().checkIfRoleIsAllowProject(MemberRole.find(userAllow.id).id)
 
       if(!userAllow == nil or !isOrderIn )
         render_404
