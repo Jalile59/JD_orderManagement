@@ -36,7 +36,9 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order.update(device_params)
 
-    redirect_to orders_path
+    #redirect_to orders_path, project_id: @order.project.to_s
+    redirect_to controller: 'orders', action: 'index', project_id: @order.project.to_s
+
   end
 
   def new
@@ -53,7 +55,7 @@ class OrdersController < ApplicationController
     @order.save
 
     if @order.save
-      redirect_to orders_path
+      redirect_to controller: 'orders', action: 'index', project_id: @order.project.to_s
     end
 
   end
@@ -65,9 +67,10 @@ class OrdersController < ApplicationController
 
   def destroy
     @order = Order.find(params[:id])
+    @projectId = @order.project.to_s
     @order.destroy
 
-    redirect_to orders_path
+    redirect_to controller: 'orders', action: 'index', project_id: @projectId
   end
 
   private
