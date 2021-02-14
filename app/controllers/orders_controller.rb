@@ -28,7 +28,7 @@ class OrdersController < ApplicationController
 
   def edit
     @order = Order.find(params[:id])
-    redirect_to orders_path
+
 
   end
 
@@ -41,7 +41,6 @@ class OrdersController < ApplicationController
 
   def new
     @order= Order.new
-    redirect_to orders_path
 
   end
 
@@ -53,7 +52,10 @@ class OrdersController < ApplicationController
 
     @order.save
 
-    redirect_to orders_path
+    if @order.save
+      redirect_to orders_path
+    end
+
   end
 
   def fixtures
