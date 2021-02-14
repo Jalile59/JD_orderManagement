@@ -7,7 +7,7 @@
 <% end %>
 <h2>Suivi commandes</h2>
 <%# User.current.inspect %>
-<a href="<%= putformView_path(@project) %>" type="button" class="btn btn-light">+ création</a>
+<a href="<%=  new_order_path(@project) %>" type="button" class="btn btn-light">+ création</a>
 
 <table class="table">
   <thead class="thead-dark">
@@ -22,7 +22,7 @@
       <th scope="col">Action</th>
     </tr>
   </thead>
-  <% @listeOrder.each do |orderTrack| %>
+  <% @orders.each do |orderTrack| %>
   <tbody>
     <tr>
       <td><%= orderTrack.id %></td>
@@ -32,7 +32,12 @@
       <td><%= orderTrack.description %></td>
       <td><%= Addresse.find(orderTrack.addresses_id).name %></td>
       <td><%= StatusOrder.find(orderTrack.statusOrders_id).name %></td>
-      <td><a href="<%= editAddviewForm_path(orderTrack.id,  @project) %>" >edit</a></td>
+      <td>
+        <a href="<%= edit_order_path(orderTrack.id)%>" >edit</a>
+        <%= link_to "Supprimer", order_path(orderTrack),
+                    method: :delete,
+                    data: { confirm: "etes vous sûr?" } %></td>
+      </td>
     </tr>
   </tbody>
   <% end %>

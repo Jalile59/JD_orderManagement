@@ -7,18 +7,18 @@ class Paginationmanager
     setOffset = (page-1) * limitByPage
 
     if projectId.eql?('all')
-      return order = OrderTrack.limit(limitByPage).offset(setOffset)
+      return order = Order.limit(limitByPage).offset(setOffset)
     else
-      return order = OrderTrack.where(project: projectId).limit(limitByPage).offset(setOffset)
+      return order = Order.where(project: projectId).limit(limitByPage).offset(setOffset)
     end
   end
 
   def pageMax(projectid, limitBypage =30)
 
     if projectid.eql?('all')
-      orderQuantity = OrderTrack.count
+      orderQuantity = Order.count
     else
-       orderQuantity = OrderTrack.where(project: projectid).count
+       orderQuantity = Order.where(project: projectid).count
     end
 
     return ((orderQuantity / limitBypage).round(half: :up)) +1
