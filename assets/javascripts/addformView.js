@@ -1,5 +1,6 @@
 
 function fileupdataInInput(data){
+    console.log(data['value'])
     id = data['value'];
     if(id)
     {
@@ -49,9 +50,8 @@ function ajxfunctionGetData(id, idproject)
 
     $.ajax({
         url : '/ajax/defxmlrequeteSlectform/'+id,
-        type : 'POST',
-        data: data,
-        dataType : 'json',
+        type : 'GET',
+        dataType : 'html',
         success : function(data){
             dataToObject = JSON.parse(data)
             addHtmlinputSelect(dataToObject);    

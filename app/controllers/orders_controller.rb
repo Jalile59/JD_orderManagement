@@ -73,6 +73,15 @@ class OrdersController < ApplicationController
     redirect_to controller: 'orders', action: 'index', project_id: @projectId
   end
 
+  def defxmlrequeteSlectform
+    data  = params[:id]
+
+    @device = Device.find(data)
+    #abort(field) 
+    render json: @device
+
+  end
+
   private
   def device_params
 
