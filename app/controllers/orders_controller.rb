@@ -9,8 +9,7 @@ class OrdersController < ApplicationController
     @page = params[:page].to_i
     pagination = Paginationmanager.new()
     @orders = pagination.paginationOrders( params[:project_id], @page)
-    @maxPage = pagination.pageMax(params[:project_id])
-
+    @maxPage = pagination.pageMaxOrders(params[:project_id])
   end
 
   def indexAdmin
@@ -22,7 +21,7 @@ class OrdersController < ApplicationController
     @page = params[:page].to_i
     pagination = Paginationmanager.new()
     @orders = pagination.paginationOrders( 'all', @page)
-    @maxPage = pagination.pageMax(params[:project_id])
+    @maxPage = pagination.pageMaxOrders(params[:project_id])
 
   end
 

@@ -39,7 +39,7 @@ function addinputElement()
     dataName = $("[data=name]").find(":selected").text()
     dataQuantity = $("[data=quantity]").val();
 
-    elem = "<div id="+indice+" style='margin-top: 15px' class='row'> <div class='col-3'> <input class='form-control' type='text' name='codearticle[]' value="+ dataCodeArticle+" readonly> </div><div class='col-3'> <input class='form-control' type='text' name='name[]' value="+dataName+" readonly> </div> <div class='col-3'> <input class='form-control' type='number' value='"+ dataQuantity+ "' placeholder='Quantity' name='quantity[]' readonly> </div> <div class='col-3'> <input class='form-control' type='text' placeholder='Indiquez numéro de serie' name='serial[]'> </div> <div class='col-1'><button type='button' onclick='removeDiv("+ indice+")'>-</button> </div> </div> ";
+    elem = "<div id="+indice+" style='margin-top: 15px' class='inline'> <input type='text' name='codearticle[]' value="+ dataCodeArticle+" readonly><input type='text' name='name[]' value="+dataName+" readonly> <input type='number' value='"+ dataQuantity+ "' placeholder='Quantity' name='quantity[]' readonly> <input type='text' placeholder='Indiquez numéro de serie' name='serial[]'><button type='button' onclick='removeDiv("+ indice+")'>-</button>";
     $('#inputs').append(elem);
 
 }

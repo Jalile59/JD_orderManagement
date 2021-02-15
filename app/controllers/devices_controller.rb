@@ -2,6 +2,17 @@ class DevicesController < ApplicationController
 
   def index
     @device = Device.new()
+
+    if params[:page].nil?
+      params[:page] = 1
+    end
+    @page = params[:page].to_i
+    pagination = Paginationmanager.new()
+    @devices = pagination.paginationDevices(@page)
+    @maxPage = pagination.pageMaxDevice()
+
+    #abort(@maxPage.to_s)
+
   end
 
   def create

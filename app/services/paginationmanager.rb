@@ -13,8 +13,7 @@ class Paginationmanager
     end
   end
 
-  def pageMax(projectid, limitBypage =30)
-
+  def pageMaxOrders(projectid, limitBypage =30)
     if projectid.eql?('all')
       orderQuantity = Order.count
     else
@@ -23,6 +22,36 @@ class Paginationmanager
 
     return ((orderQuantity / limitBypage).round(half: :up)) +1
   end
+
+  def paginationDevices(page, limitByPage=30)
+
+    setOffset = (page-1) * limitByPage
+    return order = Device.limit(limitByPage).offset(setOffset)
+
+  end
+
+  def pageMaxDevice(limitBypage =30)
+
+      orderQuantity = Device.count
+    
+    return ((orderQuantity / limitBypage).round(half: :up)) +1
+  end
+
+  def paginationAddresses(page, limitByPage=30)
+
+    setOffset = (page-1) * limitByPage
+    return order = Addresse.limit(limitByPage).offset(setOffset)
+
+  end
+
+  def pageMaxAddresses(limitBypage =30)
+
+      orderQuantity = Addresse.count
+    
+    return ((orderQuantity / limitBypage).round(half: :up)) +1
+  end
+
+  
 
 
 end

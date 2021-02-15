@@ -2,6 +2,14 @@ class AddressesController < ApplicationController
 
   def index
     @addresse = Addresse.new
+
+    if params[:page].nil?
+      params[:page] = 1
+    end
+    @page = params[:page].to_i
+    pagination = Paginationmanager.new()
+    @addresses = pagination.paginationAddresses(@page)
+    @maxPage = pagination.pageMaxAddresses()
   end
 
   def destroy
