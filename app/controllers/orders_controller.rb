@@ -27,6 +27,7 @@ class OrdersController < ApplicationController
 
   def edit
     @order = Order.find(params[:id])
+    @devTrack = DeviceBytrack.where(orderTrack_id: @order.id).all
 
 
   end
@@ -42,16 +43,36 @@ class OrdersController < ApplicationController
 
   def new
     @order= Order.new
+   
 
   end
 
   def create
     @order = Order.new(device_params)
     @order.dateCreated = Time.now
-
-    #abort(@order.inspect)
+    arrayss = params[:codearticle]
 
     @order.save
+
+    if params.include? (:codearticle)
+      arrayss.each  do  |n| 
+        @moduleD = Device.where(codearticle: n).first
+        i=0
+        #abort(@moduleD)
+        @deviceByOrd = DeviceBytrack.new(
+           device_id: @moduleD.id,
+           orderTrack_id: @order.id, 
+           created: Time.now, 
+           quantity: params[:quantity][i], 
+           serial: params[:serial][i]
+          )
+
+        @deviceByOrd.save
+        i = i+1
+      end
+    end
+
+    
 
     if @order.save
       redirect_to controller: 'orders', action: 'index', project_id: @order.project.to_s
@@ -84,7 +105,7 @@ class OrdersController < ApplicationController
   private
   def device_params
 
-    params.require(:order).permit(:dateSending, :numberDHL, :user, :description, :statusOrders_id, :addresses_id, :project)
+    params.require(:order).permit(:dateSending, :numberDHL, :user, :description, :statusOrders_id, :source, :destination, :project)
   end
 
 

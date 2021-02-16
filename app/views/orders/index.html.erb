@@ -18,7 +18,8 @@
         <th scope="col">Date creation</th>
         <th scope="col">Date Envoi</th>
         <th scope="col">Description</th>
-        <th scope="col">Addresse</th>
+        <th scope="col">Source</th>
+        <th scope="col">Destination</th>
         <th scope="col">Status</th>
         <th scope="col">Action</th>
       </tr>
@@ -31,7 +32,8 @@
         <td><%= orderTrack.dateCreated %></td>
         <td><%= orderTrack.dateSending %></td>
         <td><%= orderTrack.description %></td>
-        <td><%= Addresse.find(orderTrack.addresses_id).name %></td>
+        <td><%= orderTrack.source %></td>
+        <td><%= orderTrack.destination %></td>
         <td><%= StatusOrder.find(orderTrack.statusOrders_id).name %></td>
         <td>
           <a href="<%= edit_order_path(orderTrack.id)%>" >edit</a>

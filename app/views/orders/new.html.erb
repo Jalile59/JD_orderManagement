@@ -42,8 +42,10 @@
       </div>
     </div>
       <div class="inline">
-         <%= collection_select(:order, :statusOrders_id, StatusOrder.all, :id, :name, prompt: "Selectionner status", required: true) %>
-        <%= collection_select(:order, :addresses_id, Addresse.all, :id, :name, prompt: "Selectionner une adresse", required: true) %>
+        <%= collection_select(:order, :statusOrders_id, StatusOrder.all, :id, :name, prompt: "Selectionner status", required: true) %>
+        <%= collection_select(:order, :source,          Addresse.all, :name, :name, prompt: "Selectionner une source", required: true) %>
+        <%= collection_select(:order, :destination,     Addresse.all, :name, :name, prompt: "Selectionner une destination", required: true) %>
+
         <% if User.find(session[:user_id]).admin %>
           <%= collection_select(:order, :project, Project.all, :identifier, :name, prompt: "Selectionner un projet", required: true) %>
         <% else %>
@@ -58,7 +60,7 @@
         <button id="addModule" type="button" indice=0 onclick="addinputElement()">+</button>
       </div>
     </div>
-    <div style="margin-top: 15px" id="inputs" >
+    <div class="box" style="margin-top: 15px" id="inputs" >
     </div>
     <div style="margin-top: 15px" class="row">
       <div>
