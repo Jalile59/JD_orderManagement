@@ -7,9 +7,9 @@
 <% end %>
 <h2>Suivi commandes</h2>
 <%# User.current.inspect %>
-<a href="<%= putformViewAdmin_path(nil) %>" type="button" class="btn btn-light">+ création</a>
-<a href="<%= putformViewAdmin_path(nil) %>" type="button" class="btn btn-light">Gestion Adresses</a>
-<a href="<%= devices_path() %>" type="button" class="btn btn-light">Modules</a>
+    <a href="<%= new_order_path() %>" type="button" class="btn btn-light">+ création</a>
+    <a href="<%= addressesP_path(1) %>" type="button" class="btn btn-light">Gestion Adresses</a>
+    <a href="<%= devicesP_path(1) %>" type="button" class="btn btn-light">Modules</a>
 
 
 
@@ -21,12 +21,13 @@
       <th scope="col">Date creation</th>
       <th scope="col">Date Envoi</th>
       <th scope="col">Description</th>
-      <th scope="col">Addresse</th>
+      <th scope="col">Source</th>
+      <th scope="col">Destination</th>
       <th scope="col">Status</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
-  <% @listeOrder.each do |orderTrack| %>
+  <% @orders.each do |orderTrack| %>
   <tbody>
     <tr>
       <td><%= orderTrack.id %></td>
@@ -34,10 +35,28 @@
       <td><%= orderTrack.dateCreated %></td>
       <td><%= orderTrack.dateSending %></td>
       <td><%= orderTrack.description %></td>
-      <td><%= Addresse.find(orderTrack.addresses_id).name %></td>
+      <td><%= orderTrack.source %></td>
+      <td><%= orderTrack.destination %></td>
       <td><%= StatusOrder.find(orderTrack.statusOrders_id).name %></td>
-      <td><a href="<%= editAddviewForm_path(orderTrack.id,  orderTrack.project) %>" >edit</a></td>
+    <td>
+          <a href="<%= edit_order_path(orderTrack.id)%>" >edit</a>
+          <%= link_to "Supprimer", order_path(orderTrack),
+                      method: :delete,
+                      data: { confirm: "etes vous sûr?" } %></td>
+        </td>
     </tr>
   </tbody>
   <% end %>
 </table>
+
+ <div class="row">
+    <div class="col-3 offset-5">
+    <% unless @page <= 1  %>
+      <a href="<%= devicesP_path(@page-1) %>"><img class="fit-picture" src="<%= image_path('previous.png', :plugin =>'jd_order_management') %>" alt="Grapefruit slice atop a pile of other slices"></a>
+    <% end %>
+      <a><%=  @page  %> - <%= @maxPage%></a>
+    <% if @page < @maxPage %>
+      <a href="<%= devicesP_path(@page+1) %>"><img class="fit-picture" src="<%= image_path('next.png', :plugin =>'jd_order_management') %>" alt="Grapefruit slice atop a pile of other slices"></a>
+    <% end %>
+    </div>
+  </div>

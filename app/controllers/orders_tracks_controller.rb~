@@ -1,0 +1,2 @@
+class OrdersTracksController < ApplicationController
+end

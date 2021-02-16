@@ -5,7 +5,6 @@ class CreateDevices < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :designation
       t.string :project
-      t.string :serial
     end
   end
 end

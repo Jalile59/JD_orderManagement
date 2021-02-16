@@ -1,8 +1,9 @@
 # Plugin's routes
 # See: http://guides.rubyonrails.org/routing.html
 
-get 'orders',                                           to: 'orders#index',                     as: 'orders'
-get 'orders/:project_id/:page',                         to: 'orders#index',                     as: 'ordersP'
+get 'orders/page/:project_id/:page',                    to: 'orders#index',                     as: 'ordersP'
+get 'devices/page/:page',                               to: 'devices#index',                    as: 'devicesP'
+get 'addresses/page/:page',                             to: 'addresses#index',                  as: 'addressesP'
 get 'orders/admin',                                     to: 'orders#indexAdmin',                as: 'ordersAdmin'
 get 'addform/:project_id',                              to: 'orders#addform',                   as: 'formView'
 post 'postform',                                        to: 'orders#postForm',                  as: 'putform'
@@ -12,6 +13,6 @@ get 'ajax/defxmlrequeteSlectform/:id',                  to: 'orders#defxmlrequet
 get 'orders/fixtures',                                  to: 'orders#fixtures',                  as: 'fixtures'
 get 'orders/editAddviewForm/:id/:project_id',           to: 'orders#editAddviewForm',           as:'editAddviewForm'
 get 'orders/editAddviewForm/deleded/deviceOrders/:id',  to: 'orders#delAjaxrequet',             as:'deletedDeviceOrder'
-#get 'devices',                                           to: 'devices#index',                    as: 'device'
 resources :devices
 resources :addresses
+resources :orders
