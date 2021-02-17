@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-  belongs_to :StatusOrder, foreign_key: true
+  belongs_to :statusOrder, foreign_key: true
   has_many :deviceBytracks
 
 

@@ -11,6 +11,7 @@ class CreateOrderTracks < ActiveRecord::Migration[5.2]
       t.string :source
       t.string :destination
       t.belongs_to :statusOrders
+      
     end
   end
 end

@@ -1,0 +1,57 @@
+<!-- CSS only -->
+<!-- JavaScript Bundle with Popper -->
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'bootstrap', :plugin => 'jd_order_management' %>
+    <%= javascript_include_tag 'bootstrap', :plugin => 'jd_order_management' %>
+    <%= javascript_include_tag 'modue', :plugin => 'jd_order_management' %>
+
+
+<% end %>
+<h2>Recherche modules d <%= @device%></h2>
+<nav>
+    <a href="<%= new_order_path(nil) %>" type="button" class="btn btn-light">+ création</a>
+    <a href="<%= addressesP_path(1) %>" type="button" class="btn btn-light">Gestion Adresses</a>
+    <a href="<%= devicesP_path(1) %>" type="button" class="btn btn-light">Modules</a>
+</nav>
+
+    <div class="box">
+        <div class="col-6">
+            <%= form_with   do |form| %>
+                    <div style="margin-top: 10px"  class="inline">
+                        <%= collection_select(:order, :source,       Addresse.all, :name, :name, prompt: "Selectionner une source", required: true) %>
+                        <%= collection_select(:order, :destination,  Addresse.all, :name, :name, prompt: "Selectionner une source", required: true) %>
+                        <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :codearticle), prompt: "Module_codeArticle", "data" => "codearticle", :onchange => "fileupdataInInput(this);"  %>
+                        <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :name), prompt: "Module_Designation", "data" => "name", :onchange => "fileupdataInInput(this);" %>
+                        <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :designation), prompt: "Module", "data" => "designation", :onchange => "fileupdataInInput(this);" %>
+       
+                        <button id="formModuleSave" style="margin-top: 10px" type="submit" class="btn  mb-2" onclick="eventSaveModule()">save</button>
+                    </div>
+            <% end %> 
+        </div>
+    <div>
+
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">date envoi</th>
+      <th scope="col">Module</th>
+      <th scope="col">serial</th>
+      <th scope="col">source</th>
+      <th scope="col">Destination</th>
+      <th scope="col">Status</th>
+      <th scope="col">action</th>
+
+    </tr>
+  </thead>
+  
+  <tbody>
+    <tr id="row_">
+   
+    </tr>
+  </tbody>
+ 
+</table>
+
+
