@@ -14,6 +14,8 @@ get 'orders/fixtures',                                  to: 'orders#fixtures',  
 get 'orders/editAddviewForm/:id/:project_id',           to: 'orders#editAddviewForm',           as:'editAddviewForm'
 get 'orders/editAddviewForm/deleded/deviceOrders/:id',  to: 'orders#delAjaxrequet',             as:'deletedDeviceOrder'
 get 'search/orders',                                    to: 'searchs#index',                    as: 'searchOrders'
+post 'search/orders',                                    to: 'searchs#index',                   as: 'searchOrders_post'
+
 resources :devices
 resources :addresses
 resources :orders

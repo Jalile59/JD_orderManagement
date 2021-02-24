@@ -19,11 +19,11 @@
             <%= form_with   do |form| %>
                     <div style="margin-top: 10px"  class="inline">
                         <%= collection_select(:order, :source,       Addresse.all, :name, :name, prompt: "Selectionner une source", required: true) %>
-                        <%= collection_select(:order, :destination,  Addresse.all, :name, :name, prompt: "Selectionner une source", required: true) %>
-                        <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :codearticle), prompt: "Module_codeArticle", "data" => "codearticle", :onchange => "fileupdataInInput(this);"  %>
-                        <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :name), prompt: "Module_Designation", "data" => "name", :onchange => "fileupdataInInput(this);" %>
-                        <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :designation), prompt: "Module", "data" => "designation", :onchange => "fileupdataInInput(this);" %>
-       
+                        <%= collection_select(:order, :destination,  Addresse.all, :name, :name, prompt: "Selectionner une destination", required: true) %>
+                        <%= collection_select(:order, :project,      Project.all, :name, :name, prompt: "Selectionner une projet", required: true) %>
+
+                        <%=select_tag :designation, options_from_collection_for_select(Device.all, :name, :name), prompt: "Module_Designation", "data" => "name", :onchange => "fileupdataInInput(this);" %>
+                        <%=form.text_field :serial, placeholder:'serial' %>
                         <button id="formModuleSave" style="margin-top: 10px" type="submit" class="btn  mb-2" onclick="eventSaveModule()">save</button>
                     </div>
             <% end %> 
@@ -34,15 +34,15 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">ref:</th>
-      <th scope="col">date envoi:</th>
+      <th scope="col">Ref:</th>
+      <th scope="col">Date envoi:</th>
       <th scope="col">Module:</th>
-      <th scope="col">serial:</th>
-      <th scope="col">source:</th>
+      <th scope="col">Nomenclature:</th>
+      <th scope="col">Serial:</th>
+      <th scope="col">Source:</th>
       <th scope="col">Destination:</th>
       <th scope="col">Status:</th>
-      <th scope="col">action:</th>
-
+      <th scope="col">Action:</th>
     </tr>
   </thead>
   
@@ -53,6 +53,8 @@
       <th scope="col"><%= single.order.id %></th>
       <th scope="col"><%= single.order.dateSending %></th>
       <th scope="col"><%= Device.find(single.device_id).name %></th>
+      <th scope="col"><%= Device.find(single.device_id).designation %></th>
+
       <th scope="col"><%= single.serial %></th>
       <th scope="col"><%= single.order.source %></th>
       <th scope="col"><%= single.order.destination %></th>
