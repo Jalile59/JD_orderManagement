@@ -48,6 +48,7 @@ class OrdersController < ApplicationController
   end
 
   def create
+    upload()
     @order = Order.new(device_params)
     @order.dateCreated = Time.now
     arrayss = params[:codearticle]
@@ -58,7 +59,7 @@ class OrdersController < ApplicationController
       arrayss.each  do  |n| 
         @moduleD = Device.where(codearticle: n).first
         i=0
-        #abort(@moduleD)
+        #abort(@moduleD.id.to_s)
         @deviceByOrd = DeviceBytrack.new(
            device_id: @moduleD.id,
            orderTrack_id: @order.id, 
@@ -102,10 +103,31 @@ class OrdersController < ApplicationController
 
   end
 
+  def download_pdf
+    order = Order.find(params[:namefile])
+    send_file(
+      "#{Rails.root}/public/uploads/"+order.filename,
+      filename: order.filename,
+      type: "application/pdf"
+    )
+  end
+
   private
   def device_params
 
-    params.require(:order).permit(:dateSending, :numberDHL, :user, :description, :statusOrders_id, :source, :destination, :project)
+    params.require(:order).permit(:dateSending, :numberDHL, :user, :description, :statusOrders_id, :source, :destination, :project, :filename)
+  end
+
+  def upload
+    uploaded_file = params[:order]['file']
+    time = Time.new
+    name = time.strftime("%s") + '_' + uploaded_file.original_filename.to_s
+    params[:order]['filename'] = name
+    #abort(name)
+
+    File.open(Rails.root.join('public', 'uploads',  name), 'wb') do |file|
+      file.write(uploaded_file.read)
+    end
   end
 
 

@@ -2,6 +2,7 @@
 # See: http://guides.rubyonrails.org/routing.html
 
 get 'orders/page/:project_id/:page',                    to: 'orders#index',                     as: 'ordersP'
+get 'orders/upload/:namefile',                          to: 'orders#download_pdf',              as: 'downloadPdf'
 get 'devices/page/:page',                               to: 'devices#index',                    as: 'devicesP'
 get 'addresses/page/:page',                             to: 'addresses#index',                  as: 'addressesP'
 get 'orders/admin',                                     to: 'orders#indexAdmin',                as: 'ordersAdmin'
