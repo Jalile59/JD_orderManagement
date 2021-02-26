@@ -37,9 +37,13 @@
         <td><%= StatusOrder.find(orderTrack.statusOrders_id).name %></td>
         <td>
           <a href="<%= edit_order_path(orderTrack.id)%>" >edit</a>
+          /
           <%= link_to "Supprimer", order_path(orderTrack),
                       method: :delete,
-                      data: { confirm: "etes vous sûr?" } %></td>
+                      data: { confirm: "etes vous sûr?" } %>
+                  <% if orderTrack.filename != nil %> /
+          <%= link_to 'PDF_DHL',downloadPdf_path(orderTrack.id) %>
+          <% end %>
         </td>
       </tr>
     </tbody>

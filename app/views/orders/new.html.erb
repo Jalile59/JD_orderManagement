@@ -36,7 +36,8 @@
          <div class="invalid-feedback">
           fichier invalide
           </div>
-        <%= form.file_field :fileOrd %>
+        <%= form.file_field :file,
+    data: { max_file_size: 1.megabytes }%>
 
         </div>
       </div>
