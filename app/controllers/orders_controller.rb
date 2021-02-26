@@ -47,6 +47,9 @@ class OrdersController < ApplicationController
   end
 
   def create
+
+    upload()
+
     @order = Order.new(device_params)
     @order.dateCreated = Time.now
     arrayss = params[:codearticle]

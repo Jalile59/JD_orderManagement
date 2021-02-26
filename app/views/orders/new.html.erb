@@ -56,7 +56,6 @@
         <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :codearticle), prompt: "Module_codeArticle", "data" => "codearticle", :onchange => "fileupdataInInput(this);"  %>
         <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :name), prompt: "Module_Designation", "data" => "name", :onchange => "fileupdataInInput(this);" %>
         <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :designation), prompt: "Module", "data" => "designation", :onchange => "fileupdataInInput(this);" %>
-        <%= form.number_field :numberDHL,  placeholder:'Quantitées', data:'quantity' %>
         <button id="addModule" type="button" indice=0 onclick="addinputElement()">+</button>
       </div>
     </div>
