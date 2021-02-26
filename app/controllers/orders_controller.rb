@@ -27,8 +27,7 @@ class OrdersController < ApplicationController
 
   def edit
     @order = Order.find(params[:id])
-    @devTrack = DeviceBytrack.where(orderTrack_id: @order.id).all
-
+    @devTrack = DeviceBytrack.where(order_id: @order.id).all
 
   end
 
@@ -48,27 +47,29 @@ class OrdersController < ApplicationController
   end
 
   def create
+
     upload()
+
     @order = Order.new(device_params)
     @order.dateCreated = Time.now
     arrayss = params[:codearticle]
-
     @order.save
 
     if params.include? (:codearticle)
       arrayss.each  do  |n| 
         @moduleD = Device.where(codearticle: n).first
         i=0
-        #abort(@moduleD.id.to_s)
+
         @deviceByOrd = DeviceBytrack.new(
            device_id: @moduleD.id,
-           orderTrack_id: @order.id, 
+           order_id: @order.id, 
            created: Time.now, 
            quantity: params[:quantity][i], 
            serial: params[:serial][i]
           )
 
         @deviceByOrd.save
+
         i = i+1
       end
     end

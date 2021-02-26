@@ -12,6 +12,7 @@ class CreateOrderTracks < ActiveRecord::Migration[5.2]
       t.string :destination
       t.string :filename
       t.belongs_to :statusOrders
+      
     end
   end
 end
