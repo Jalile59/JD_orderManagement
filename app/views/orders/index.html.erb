@@ -8,7 +8,7 @@
 <% end %>
 <h2>Suivi commandes</h2>
 <%# User.current.inspect %>
-<a href="<%=  new_order_path(@project) %>" type="button" class="btn btn-light">+ création</a>
+<a href="<%=  new_order_path(@project_id) %>" type="button" class="btn btn-light">+ création</a>
 <div class="box">
   <table class="table">
     <thead class="thead-dark">
@@ -26,7 +26,15 @@
     </thead>
     <% @orders.each do |orderTrack| %>
     <tbody>
-      <tr class="HitPriority">
+      <tr class="
+    <% if StatusOrder.find(orderTrack.statusOrders_id).name == 'En cours' %>
+        HitPriority
+    <% elsif StatusOrder.find(orderTrack.statusOrders_id).name == 'cloturée' %>
+        normalePriority
+    <% elsif StatusOrder.find(orderTrack.statusOrders_id).name == 'En attente' %>
+        lowPriority
+    <% end %>
+        ">
         <td><%= orderTrack.id %></td>
         <td><%= orderTrack.project %></td>
         <td><%= orderTrack.dateCreated %></td>
@@ -36,9 +44,9 @@
         <td><%= orderTrack.destination %></td>
         <td><%= StatusOrder.find(orderTrack.statusOrders_id).name %></td>
         <td>
-          <a href="<%= edit_order_path(orderTrack.id)%>" >edit</a>
+          <a href="<%= edit_order_path(@project_id,orderTrack.id)%>" >edit</a>
           /
-          <%= link_to "Supprimer", order_path(orderTrack),
+          <%= link_to "Supprimer", order_path(@project_id, orderTrack),
                       method: :delete,
                       data: { confirm: "etes vous sûr?" } %>
                   <% if orderTrack.filename != nil %> /

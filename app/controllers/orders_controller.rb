@@ -1,7 +1,9 @@
 class OrdersController < ApplicationController
 
   def index
-    @projects = params[:project_id]
+    @project_id = params[:project_id]
+    @project = Project.find(params[:project_id])
+
 
     if params[:page].nil?
       params[:page] = 1
@@ -26,21 +28,28 @@ class OrdersController < ApplicationController
   end
 
   def edit
+    @project = Project.find(params[:project_id])
+
     @order = Order.find(params[:id])
     @devTrack = DeviceBytrack.where(order_id: @order.id).all
 
   end
 
   def update
-    @order = Order.find(params[:id])
-    @order.update(device_params)
+     @order = Order.find(params[:id])
 
+    # abort(@order)
+    if @order.update(device_params)
     #redirect_to orders_path, project_id: @order.project.to_s
-    redirect_to controller: 'orders', action: 'index', project_id: @order.project.to_s
+      redirect_to controller: 'orders', action: 'index', project_id: @order.project.to_s
+    else
+      redirect_to controller: 'orders', action: 'edit', project_id: @order.project.to_s
+    end
 
   end
 
   def new
+    @project = Project.find(params[:project_id])
     @order= Order.new
    
 
@@ -48,7 +57,9 @@ class OrdersController < ApplicationController
 
   def create
 
+    if params.include?(:file)
     upload()
+    end
 
     @order = Order.new(device_params)
     @order.dateCreated = Time.now
@@ -129,6 +140,11 @@ class OrdersController < ApplicationController
     File.open(Rails.root.join('public', 'uploads',  name), 'wb') do |file|
       file.write(uploaded_file.read)
     end
+  end
+
+  def createIssusOrderLimit()
+    ntracker = Tracker.create(name:'order', )
+    @issue = Issue.create(subject: 'test', tracker_id: 1, )
   end
 
 

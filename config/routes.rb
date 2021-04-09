@@ -19,4 +19,4 @@ post 'search/orders',                                    to: 'searchs#index',   
 
 resources :devices
 resources :addresses
-resources :orders
+resources :orders, path: '/projects/:project_id/order'
