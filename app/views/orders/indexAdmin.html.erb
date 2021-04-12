@@ -7,7 +7,7 @@
 <% end %>
 <h2>Suivi commandes</h2>
 <%# User.current.inspect %>
-    <a href="<%= new_order_path() %>" type="button" class="btn btn-light">+ création</a>
+  <!--  <a href="" type="button" class="btn btn-light">+ création</a> -->
     <a href="<%= addressesP_path(1) %>" type="button" class="btn btn-light">Gestion Adresses</a>
     <a href="<%= devicesP_path(1) %>" type="button" class="btn btn-light">Modules</a>
 
@@ -39,8 +39,8 @@
       <td><%= orderTrack.destination %></td>
       <td><%= StatusOrder.find(orderTrack.statusOrders_id).name %></td>
     <td>
-          <a href="<%= edit_order_path(orderTrack.id)%>" >edit</a>
-          <%= link_to "Supprimer", order_path(orderTrack),
+      <a href="<%= edit_order_path(orderTrack.project, orderTrack.id)%>" >edit</a>
+          <%= link_to "Supprimer", order_path(orderTrack.project, orderTrack),
                       method: :delete,
                       data: { confirm: "etes vous sûr?" } %></td>
         </td>

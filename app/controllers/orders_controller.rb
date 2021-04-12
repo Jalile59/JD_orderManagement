@@ -15,7 +15,6 @@ class OrdersController < ApplicationController
   end
 
   def indexAdmin
-    @projects = params[:project_id]
 
     if params[:page].nil?
       params[:page] = 1
@@ -56,6 +55,7 @@ class OrdersController < ApplicationController
   end
 
   def create
+    @project = Project.find(params[:project_id])
 
     if params.include?(:file)
     upload()
@@ -69,14 +69,15 @@ class OrdersController < ApplicationController
     if params.include? (:codearticle)
       arrayss.each  do  |n| 
         @moduleD = Device.where(codearticle: n).first
+        puts 'moduleId='+@moduleD.id.to_s
         i=0
 
         @deviceByOrd = DeviceBytrack.new(
-           device_id: @moduleD.id,
-           order_id: @order.id, 
-           created: Time.now, 
-           quantity: params[:quantity][i], 
-           serial: params[:serial][i]
+          device_id: @moduleD.id,
+          order_id: @order.id, 
+          created: Time.now, 
+          quantity: params[:quantity][i], 
+          serial: params[:serial][i]
           )
 
         @deviceByOrd.save
@@ -89,6 +90,8 @@ class OrdersController < ApplicationController
 
     if @order.save
       redirect_to controller: 'orders', action: 'index', project_id: @order.project.to_s
+    else
+      render 'new'
     end
 
   end

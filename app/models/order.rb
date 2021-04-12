@@ -1,4 +1,11 @@
 class Order < ActiveRecord::Base
   
   belongs_to :StatusOrder, foreign_key: true
-  has_many
+  has_many :deviceBytracks  
+
+  validates :description, presence: { message: "Description is missing." }
+  validates :statusOrders_id, presence: { message: "Please select status." }
+  validates :dateSending, presence: { message: "Date sending is missing." }
+
+
+end
