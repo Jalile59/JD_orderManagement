@@ -9,14 +9,18 @@
 <h2 style="margin: 20px">Formulaire Edition</h2>
 <button style="margin-bottom: 20px" type="button" class="btn btn-light">Retour</button>
 
-<%= form_for @order  do |form| %>
+<%= form_for @order,  :url => {:action => "update", :id => @order.id, project_id: @order.project}  do |form| %>
   <div class="form-row box">
+
+    <% @order.errors.each do |attr, msg|  %>
+      <div class="alert alert-danger" role="alert">
+        <%= msg %>
+      </div>
+    <% end %>
     <div class="row">
       <%= form.label :Date_envoi, class: 'form-label' %>
       <div class="col-3">
-        <% #form.date_field  :dateSending, class: 'form-control', required: true  %>
-        <%= form.date_field :dateSending, as: :date, value: form.object.dateSending %>
-
+        <%= form.date_field  :dateSending, class: 'form-control'  %>
       </div>
       <div class="col-3">
         <%= form.text_field :numberDHL, class: 'form-control', placeholder:'Numéro DHL' %>
@@ -30,69 +34,42 @@
     <div style="margin-top: 15px" class="row">
       <%= form.label :description, class: 'form-label' %>
       <div class="col-12">
-        <%= form.text_area(:description, size: '50x5' )  %>
+        <%= form.text_area(:description, size: '50x5')  %>
       </div>
 
       <div class="row">
         <div class="col-3" >
-         <div class="invalid-feedback">
-          fichier invalide
+          <div class="invalid-feedback">
+            fichier invalide
           </div>
-        <%= form.file_field :fileOrd %>
+          <%= form.file_field :file,
+                              data: { max_file_size: 1.megabytes }%>
+
 
         </div>
       </div>
+    </div>
+    <div class="inline">
+      <%= collection_select(:order, :statusOrders_id, StatusOrder.all, :id, :name, prompt: "Selectionner status") %>
+      <%= collection_select(:order, :source,          Addresse.all, :name, :name, prompt: "Selectionner une source", required: true) %>
+      <%= collection_select(:order, :destination,     Addresse.all, :name, :name, prompt: "Selectionner une destination", required: true) %>
 
-      <div class="inline">
-        <%= collection_select(:order, :statusOrders_id, StatusOrder.all, :id, :name, prompt: "Selectionner status", required: true) %>
-        <%= collection_select(:order, :source,          Addresse.all, :name, :name, prompt: "Selectionner une source", required: true) %>
-        <%= collection_select(:order, :destination,     Addresse.all, :name, :name, prompt: "Selectionner une destination", required: true) %>
-
-        <% if User.find(session[:user_id]).admin %>
-          <%= collection_select(:order, :project, Project.all, :identifier, :name, prompt: "Selectionner un projet", required: true) %>
-        <% else %>
-          <%= form.text_field :projectId, placeholder:'Status', value:@project.name, :readonly => true %>
-        <% end %>
-     </diV>
+      <%= form.text_field :project, placeholder:'Status', value:@project.identifier, :readonly => true %>
+    </diV>
+    <div style="margin-top: 15px" class="inline">
+      <%=select_tag :device, options_from_collection_for_select(Device.where(project: @project.identifier), :id, :codearticle), prompt: "Module_codeArticle", "data" => "codearticle", :onchange => "fileupdataInInput(this);"  %>
+      <%=select_tag :device, options_from_collection_for_select(Device.where(project: @project.identifier), :id, :name), prompt: "Module_Designation", "data" => "name", :onchange => "fileupdataInInput(this);" %>
+      <%=select_tag :device, options_from_collection_for_select(Device.where(project: @project.identifier), :id, :designation), prompt: "Module", "data" => "designation", :onchange => "fileupdataInInput(this);" %>
+      <button id="addModule" type="button" indice=0 onclick="addinputElement()">+</button>
     </div>
- <div style="margin-top: 15px" class="inline">
-        <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :codearticle), prompt: "Module_codeArticle", "data" => "codearticle", :onchange => "fileupdataInInput(this);"  %>
-        <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :name), prompt: "Module_Designation", "data" => "name", :onchange => "fileupdataInInput(this);" %>
-        <%=select_tag :device, options_from_collection_for_select(Device.all, :id, :designation), prompt: "Module", "data" => "designation", :onchange => "fileupdataInInput(this);" %>
-        <%= form.number_field :numberDHL,  placeholder:'Quantitées', data:'quantity' %>
-        <button id="addModule" type="button" indice=0 onclick="addinputElement()">+</button>
-      </div>
+  </div>
+  <div class="box" style="margin-top: 15px" id="inputs" >
+  </div>
+  <div style="margin-top: 15px" class="row">
+    <div>
+      <%= form.submit "Create" %>
     </div>
-
-    <div style="margin-top: 15px" id="inputs" >
-          <% @devTrack.each do |deVices| %>
-    <div id="<%= deVices.id %>" style='margin-top: 15px' class='row'> 
-
-      <div class='col-2'> 
-        <input class='form-control' type='text'  value="<%= Device.find(deVices.device_id).codearticle %>" readonly> 
-      </div>
-      <div class='col-2'> 
-        <input class='form-control' type='text'  value="<%= Device.find(deVices.device_id).name %>" readonly> 
-      </div> 
-      <div class='col-2'> 
-        <input class='form-control' type='text'  value="<%= deVices.serial %>" readonly> 
-      </div> 
-      <div class='col-2'> 
-        <input class='form-control' type='number' value="<%= deVices.quantity %>" placeholder='Quantity'  readonly> 
-      </div> 
-      <div class='col-1'>
-        <button  type='button' onclick='deletedDeviceOrder(<%= deVices.id %>)'>-</button> 
-      </div> 
-      </div>
-      <% end %> 
-    </div>
-    <div style="margin-top: 15px" id="inputs" >
-    </div>
-    <div style="margin-top: 15px" class="row">
-      <div>
-        <%= form.submit "Create" %>
-      </div>
-    </div>
+  </div>
   </div>
 
 

@@ -1,0 +1,76 @@
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'bootstrap', :plugin => 'jd_order_management' %>
+  <%= javascript_include_tag 'bootstrap', :plugin => 'jd_order_management' %>
+  <%= javascript_include_tag 'addformView', :plugin => 'jd_order_management' %>
+
+
+<% end %>
+
+<h2 style="margin: 20px">Formulaire suivi</h2>
+<button style="margin-bottom: 20px" type="button" class="btn btn-light">Retour</button>
+
+<%= form_for @order  do |form| %>
+  <div class="form-row box">
+  
+	<% @order.errors.each do |attr, msg|  %>
+	<div class="alert alert-danger" role="alert">
+		<%= msg %>
+	</div>
+	<% end %>
+    <div class="row">
+      <%= form.label :Date_envoi, class: 'form-label' %>
+      <div class="col-3">
+        <%= form.date_field  :dateSending, class: 'form-control'  %>
+      </div>
+      <div class="col-3">
+        <%= form.text_field :numberDHL, class: 'form-control', placeholder:'Numéro DHL' %>
+      </div>
+
+      <%= form.label :utilisateur, class: 'form-label' %>
+      <div class="col-3">
+        <%= form.text_field :user, class: 'form-control', placeholder:'user', value:User.find(session[:user_id]), :readonly => true %>
+      </div>
+    </div>
+    <div style="margin-top: 15px" class="row">
+      <%= form.label :description, class: 'form-label' %>
+      <div class="col-12">
+        <%= form.text_area(:description, size: '50x5')  %>
+      </div>
+
+      <div class="row">
+        <div class="col-3" >
+         <div class="invalid-feedback">
+          fichier invalide
+          </div>
+        <%= form.file_field :file,
+    data: { max_file_size: 1.megabytes }%>
+
+
+        </div>
+      </div>
+    </div>
+      <div class="inline">
+        <%= collection_select(:order, :statusOrders_id, StatusOrder.all, :id, :name, prompt: "Selectionner status") %>
+        <%= collection_select(:order, :source,          Addresse.all, :name, :name, prompt: "Selectionner une source", required: true) %>
+        <%= collection_select(:order, :destination,     Addresse.all, :name, :name, prompt: "Selectionner une destination", required: true) %>
+
+          <%= form.text_field :project, placeholder:'Status', value:@project.identifier, :readonly => true %>
+     </diV>
+    <div style="margin-top: 15px" class="inline">
+        <%=select_tag :device, options_from_collection_for_select(Device.where(project: @project.identifier), :id, :codearticle), prompt: "Module_codeArticle", "data" => "codearticle", :onchange => "fileupdataInInput(this);"  %>
+        <%=select_tag :device, options_from_collection_for_select(Device.where(project: @project.identifier), :id, :name), prompt: "Module_Designation", "data" => "name", :onchange => "fileupdataInInput(this);" %>
+        <%=select_tag :device, options_from_collection_for_select(Device.where(project: @project.identifier), :id, :designation), prompt: "Module", "data" => "designation", :onchange => "fileupdataInInput(this);" %>
+        <button id="addModule" type="button" indice=0 onclick="addinputElement()">+</button>
+      </div>
+    </div>
+    <div class="box" style="margin-top: 15px" id="inputs" >
+    </div>
+    <div style="margin-top: 15px" class="row">
+      <div>
+        <%= form.submit "Create" %>
+      </div>
+    </div>
+  </div>
+
+
+<% end %>

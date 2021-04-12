@@ -28,22 +28,26 @@ class OrdersController < ApplicationController
 
   def edit
     @project = Project.find(params[:project_id])
-
     @order = Order.find(params[:id])
     @devTrack = DeviceBytrack.where(order_id: @order.id).all
 
   end
 
   def update
-     @order = Order.find(params[:id])
+    @project = Project.find(params[:project_id])
 
-    # abort(@order)
-    if @order.update(device_params)
+    @order = Order.find(params[:id])
+     if params[:order]['file'].nil? == false
+       upload()
+     end
+
+
+     if @order.update(device_params)
     #redirect_to orders_path, project_id: @order.project.to_s
       redirect_to controller: 'orders', action: 'index', project_id: @order.project.to_s
     else
-      redirect_to controller: 'orders', action: 'edit', project_id: @order.project.to_s
-    end
+      render "edit"
+     end
 
   end
 
@@ -57,9 +61,10 @@ class OrdersController < ApplicationController
   def create
     @project = Project.find(params[:project_id])
 
-    if params.include?(:file)
+    if params[:order]['file'].nil? == false
     upload()
     end
+
 
     @order = Order.new(device_params)
     @order.dateCreated = Time.now
@@ -135,14 +140,17 @@ class OrdersController < ApplicationController
 
   def upload
     uploaded_file = params[:order]['file']
+
+
     time = Time.new
     name = time.strftime("%s") + '_' + uploaded_file.original_filename.to_s
     params[:order]['filename'] = name
-    #abort(name)
 
     File.open(Rails.root.join('public', 'uploads',  name), 'wb') do |file|
       file.write(uploaded_file.read)
     end
+
+    return name
   end
 
   def createIssusOrderLimit()
