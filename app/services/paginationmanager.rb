@@ -7,9 +7,9 @@ class Paginationmanager
     setOffset = (page-1) * limitByPage
 
     if projectId.eql?('all')
-      return order = Order.limit(limitByPage).offset(setOffset)
+      return order = Order.limit(limitByPage).offset(setOffset).order('dateCreated ASC')
     else
-      return order = Order.where(project: projectId).limit(limitByPage).offset(setOffset)
+      return order = Order.where(project: projectId).limit(limitByPage).offset(setOffset).order('dateCreated ASC')
     end
   end
 

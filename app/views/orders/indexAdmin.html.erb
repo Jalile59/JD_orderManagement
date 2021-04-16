@@ -3,6 +3,7 @@
 <% content_for :header_tags do %>
     <%= stylesheet_link_tag 'bootstrap', :plugin => 'jd_order_management' %>
     <%= javascript_include_tag 'bootstrap', :plugin => 'jd_order_management' %>
+    <%= stylesheet_link_tag 'jd_custom', :plugin => 'jd_order_management' %>
 
 <% end %>
 <h2>Suivi commandes</h2>
@@ -28,24 +29,36 @@
     </tr>
   </thead>
   <% @orders.each do |orderTrack| %>
-  <tbody>
-    <tr>
+    <tbody>
+    <tr class="
+    <% if StatusOrder.find(orderTrack.statusOrders_id).name == 'En cours' %>
+        HitPriority
+    <% elsif StatusOrder.find(orderTrack.statusOrders_id).name == 'cloturée' %>
+        normalePriority
+    <% elsif StatusOrder.find(orderTrack.statusOrders_id).name == 'En attente' %>
+        lowPriority
+    <% end %>
+        ">
       <td><%= orderTrack.id %></td>
       <td><%= orderTrack.project %></td>
-      <td><%= orderTrack.dateCreated %></td>
+      <td><%= orderTrack.dateCreated.in_time_zone('Paris') %></td>
       <td><%= orderTrack.dateSending %></td>
       <td><%= orderTrack.description %></td>
       <td><%= orderTrack.source %></td>
       <td><%= orderTrack.destination %></td>
       <td><%= StatusOrder.find(orderTrack.statusOrders_id).name %></td>
-    <td>
-      <a href="<%= edit_order_path(orderTrack.project, orderTrack.id)%>" >edit</a>
-          <%= link_to "Supprimer", order_path(orderTrack.project, orderTrack),
-                      method: :delete,
-                      data: { confirm: "etes vous sûr?" } %></td>
-        </td>
+      <td>
+        <a href="<%= edit_order_path(orderTrack.project, orderTrack.id)%>" >edit</a>
+        /
+        <%= link_to "Supprimer", order_path(orderTrack.project, orderTrack),
+                    method: :delete,
+                    data: { confirm: "etes vous sûr?" } %>
+        <% if orderTrack.filename != nil %> /
+          <%= link_to 'PDF_DHL',downloadPdf_path(orderTrack.id) %>
+        <% end %>
+      </td>
     </tr>
-  </tbody>
+    </tbody>
   <% end %>
 </table>
 

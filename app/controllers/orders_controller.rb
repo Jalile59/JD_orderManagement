@@ -61,14 +61,18 @@ class OrdersController < ApplicationController
   def create
     @project = Project.find(params[:project_id])
 
+    #abort(Time.now.in_time_zone('Paris').to_s)
+
     if params[:order]['file'].nil? == false
     upload()
     end
 
 
     @order = Order.new(device_params)
-    @order.dateCreated = Time.now
+    time= Time.now.localtime
+     @order.dateCreated = time
     arrayss = params[:codearticle]
+    # abort(Time.now.to_s)
     @order.save
 
     if params.include? (:codearticle)
@@ -80,7 +84,7 @@ class OrdersController < ApplicationController
         @deviceByOrd = DeviceBytrack.new(
           device_id: @moduleD.id,
           order_id: @order.id, 
-          created: Time.now, 
+          created: time,
           quantity: params[:quantity][i], 
           serial: params[:serial][i]
           )

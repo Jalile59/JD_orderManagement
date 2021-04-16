@@ -37,7 +37,7 @@
         ">
         <td><%= orderTrack.id %></td>
         <td><%= orderTrack.project %></td>
-        <td><%= orderTrack.dateCreated %></td>
+        <td><%= orderTrack.dateCreated.in_time_zone('Paris') %></td>
         <td><%= orderTrack.dateSending %></td>
         <td><%= orderTrack.description %></td>
         <td><%= orderTrack.source %></td>
