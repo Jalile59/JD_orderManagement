@@ -33,6 +33,12 @@ class OrdersController < ApplicationController
 
   end
 
+  def show
+    @project = Project.find(params[:project_id])
+    @order = Order.find(params[:id])
+    @devices = DeviceBytrack.where(order_id: @order.id)
+  end
+
   def update
     @project = Project.find(params[:project_id])
 

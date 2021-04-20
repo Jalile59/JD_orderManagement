@@ -9,7 +9,6 @@
 <% end %>
 <h2>Adresses</h2>
 <nav>
-    <a href="<%= new_order_path(nil) %>" type="button" class="btn btn-light">+ création</a>
     <a href="<%= addressesP_path(1) %>" type="button" class="btn btn-light">Gestion Adresses</a>
     <a href="<%= devicesP_path(1) %>" type="button" class="btn btn-light">Modules</a>
 </nav>
@@ -60,4 +59,6 @@
       <a href="<%= devicesP_path(@page+1) %>"><img class="fit-picture" src="<%= image_path('next.png', :plugin =>'jd_order_management') %>" alt="Grapefruit slice atop a pile of other slices"></a>
     <% end %>
     </div>
-  </div>
+</div>
+    </div>
+    </div>

@@ -1,0 +1,98 @@
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'bootstrap', :plugin => 'jd_order_management' %>
+  <%= javascript_include_tag 'bootstrap', :plugin => 'jd_order_management' %>
+  <%= javascript_include_tag 'addformView', :plugin => 'jd_order_management' %>
+
+
+<% end %>
+
+<h2 style="margin: 20px">Suivi: <strong>#<%= @order.id %></strong></h2>
+
+<%= button_to "retour", ordersP_path, :page => 1, :project_id => @order.project, :method => :get %>
+
+<%= form_for @order  do |form| %>
+  <div class="form-row box">
+  
+	<% @order.errors.each do |attr, msg|  %>
+	<div class="alert alert-danger" role="alert">
+		<%= msg %>
+	</div>
+	<% end %>
+    <div class="row">
+      <%= form.label :Date_envoi, class: 'form-label', :readonly => true %>
+      <div class="col-3">
+        <%= form.date_field  :dateSending, class: 'form-control', value:@order.dateSending , :readonly => true  %>
+      </div>
+      <div class="col-3">
+        <%= form.text_field :numberDHL, class: 'form-control', placeholder:'Numéro DHL', value:@order.serialNum,  :readonly => true %>
+      </div>
+
+      <%= form.label :utilisateur, class: 'form-label' %>
+      <div class="col-3">
+        <%= form.text_field :user, class: 'form-control', placeholder:'user', value:User.find(session[:user_id]), :readonly => true %>
+      </div>
+    </div>
+    <div style="margin-top: 15px" class="row">
+      <%= form.label :description, class: 'form-label' %>
+      <div class="col-12">
+        <%= form.text_area(:description, size: '50x5', :readonly => true)  %>
+      </div>
+
+      <div class="row">
+        <div class="col-3" >
+         <div class="invalid-feedback">
+          fichier invalide
+          </div>
+        <%= form.file_field :file,
+    data: { max_file_size: 1.megabytes }%>
+
+
+        </div>
+      </div>
+    </div>
+      <div class="inline">
+
+        <%= form.text_field :statusOrders_id, value:StatusOrder.find(@order.statusOrders_id).name, :readonly => true %>
+        <%= form.text_field :source, value:@order.source, :readonly => true %>
+        <%= form.text_field :destination, value:@order.destination, :readonly => true %>
+        <%= form.text_field :project, placeholder:'Status', value:@order.project, :readonly => true %>
+     </diV>
+    <div style="margin-top: 15px" class="inline">
+
+      </div>
+    </div>
+    <div class="box" style="margin-top: 15px" id="inputs" >
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Code Article</th>
+          <th>Designation</th>
+          <th>Quantité</th>
+          <th>Serial</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <% for device in @devices%>
+        <tr>
+          <td><%= Device.find(device.device_id).codearticle %></td>
+          <td><%= Device.find(device.device_id).name %></td>
+          <td><%= device.quantity %></td>
+          <td><%= device.serial %></td>
+
+        </tr>
+        <% end %>
+
+        </tbody>
+      </table>
+
+
+    </div>
+    <div style="margin-top: 15px" class="row">
+      <div>
+      </div>
+    </div>
+  </div>
+
+
+<% end %>

@@ -10,4 +10,7 @@
     background-color: #E9ECE5;
 }
 
-
+tr:hover {
+    background-color: wheat;
+    cursor: grab;
+}
