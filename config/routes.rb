@@ -18,5 +18,6 @@ get 'search/orders',                                    to: 'searchs#index',    
 post 'search/orders',                                    to: 'searchs#index',                   as: 'searchOrders_post'
 
 resources :devices
+resources :device_bytrack
 resources :addresses
 resources :orders, path: '/projects/:project_id/order'

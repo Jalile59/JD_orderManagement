@@ -6,8 +6,10 @@
 
 <% end %>
 
-<h2 style="margin: 20px">Formulaire Edition</h2>
-<button style="margin-bottom: 20px" type="button" class="btn btn-light">Retour</button>
+<h2 style="margin: 20px">Formulaire Edition: <strong>#<%= @order.id %></strong></h2>
+<%= button_to "Retour", ordersP_path, :page => 1, :project_id => @order.project, :method => :get %>
+<%= button_to "Modifier", ordersP_path, :page => 1, :project_id => @order.project, :method => :get %>
+
 
 <%= form_for @order,  :url => {:action => "update", :id => @order.id, project_id: @order.project}  do |form| %>
   <div class="form-row box">
@@ -20,7 +22,7 @@
     <div class="row">
       <%= form.label :Date_envoi, class: 'form-label' %>
       <div class="col-3">
-        <%= form.date_field  :dateSending, class: 'form-control'  %>
+        <%= form.date_field  :dateSending, value:@order.dateSending, class: 'form-control'  %>
       </div>
       <div class="col-3">
         <%= form.text_field :numberDHL, class: 'form-control', placeholder:'Numéro DHL' %>
@@ -64,6 +66,36 @@
     </div>
   </div>
   <div class="box" style="margin-top: 15px" id="inputs" >
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Code Article</th>
+        <th>Designation</th>
+        <th>Quantité</th>
+        <th>Serial</th>
+        <th>Action</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <% for device in @devTrack%>
+        <tr>
+          <td><%= Device.find(device.device_id).codearticle %></td>
+          <td><%= Device.find(device.device_id).name %></td>
+          <td><%= device.quantity %></td>
+          <td><%= device.serial %></td>
+          <td><%= link_to "Supprimer", device_bytrack_path(device.id),
+                          method: :delete,
+                          data: { confirm: "etes vous sûr?" } %></td>
+        </tr>
+      <% end %>
+
+      </tbody>
+    </table>
+
+
+  </div>
+  </div>
   </div>
   <div style="margin-top: 15px" class="row">
     <div>

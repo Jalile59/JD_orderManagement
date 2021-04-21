@@ -40,13 +40,12 @@
 
       <div class="row">
         <div class="col-3" >
-         <div class="invalid-feedback">
-          fichier invalide
-          </div>
-        <%= form.file_field :file,
-    data: { max_file_size: 1.megabytes }%>
-
-
+          <span class="label label-info">File:</span>
+          <% if @order.filename.nil? %>
+            <p>No file.</p>
+            <% else %>
+          <%= link_to @order.filename,downloadPdf_path(@order.id) %>
+          <% end %>
         </div>
       </div>
     </div>

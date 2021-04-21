@@ -41,11 +41,34 @@ class OrdersController < ApplicationController
 
   def update
     @project = Project.find(params[:project_id])
-
     @order = Order.find(params[:id])
-     if params[:order]['file'].nil? == false
+    @devTrack = DeviceBytrack.where(order_id: @order.id).all
+
+    if params[:order]['file'].nil? == false
        upload()
-     end
+    end
+
+    arrayss = params[:codearticle]
+
+    if params.include? (:codearticle)
+      arrayss.each  do  |n|
+        @moduleD = Device.where(codearticle: n).first
+        puts 'moduleId='+@moduleD.id.to_s
+        i=0
+
+        @deviceByOrd = DeviceBytrack.new(
+          device_id: @moduleD.id,
+          order_id: @order.id,
+          created: Time.now,
+          quantity: params[:quantity][i],
+          serial: params[:serial][i]
+        )
+
+        @deviceByOrd.save
+
+        i = i+1
+        end
+      end
 
 
      if @order.update(device_params)
@@ -53,6 +76,7 @@ class OrdersController < ApplicationController
       redirect_to controller: 'orders', action: 'index', project_id: @order.project.to_s
     else
       render "edit"
+
      end
 
   end
