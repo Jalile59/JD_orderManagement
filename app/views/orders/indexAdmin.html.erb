@@ -4,6 +4,7 @@
     <%= stylesheet_link_tag 'bootstrap', :plugin => 'jd_order_management' %>
     <%= javascript_include_tag 'bootstrap', :plugin => 'jd_order_management' %>
     <%= stylesheet_link_tag 'jd_custom', :plugin => 'jd_order_management' %>
+    <%= javascript_include_tag 'redirectToDetailOrder', :plugin => 'jd_order_management' %>
 
 <% end %>
 <h2>Suivi commandes</h2>
@@ -36,7 +37,7 @@
     <% elsif StatusOrder.find(orderTrack.statusOrders_id).name == 'En attente' %>
         lowPriority
     <% end %>
-        ">
+        ", url ="<%=ENV['HOST'] %>", ids="<%= orderTrack.id %>", project="<%= orderTrack.project %>" onclick="redirectToderail(this)">
       <td><%= orderTrack.id %></td>
       <td><%= orderTrack.project %></td>
       <td><%= orderTrack.dateCreated.in_time_zone('Paris') %></td>
@@ -46,7 +47,7 @@
       <td><%= orderTrack.destination %></td>
       <td><%= StatusOrder.find(orderTrack.statusOrders_id).name %></td>
       <td>
-        <a href="<%= edit_order_path(orderTrack.project, orderTrack.id)%>" >edit</a>
+        <a href="<%= edit_order_path(orderTrack.project,orderTrack.id)%>" >edit</a>
         /
         <%= link_to "Supprimer", order_path(orderTrack.project, orderTrack),
                     method: :delete,

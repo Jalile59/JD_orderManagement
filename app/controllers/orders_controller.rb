@@ -1,5 +1,7 @@
 class OrdersController < ApplicationController
 
+  before_action :checkIfUserAllow
+
   def index
     @project_id = params[:project_id]
     @project = Project.find(params[:project_id])
@@ -190,6 +192,20 @@ class OrdersController < ApplicationController
   def createIssusOrderLimit()
     ntracker = Tracker.create(name:'order', )
     @issue = Issue.create(subject: 'test', tracker_id: 1, )
+  end
+
+  def checkIfUserAllow()
+    @user = User.current
+
+    groupCommandeSav = Group.where(lastname: "commandeSAV").first
+
+    if(groupCommandeSav.users.length() > 0)
+      if(groupCommandeSav.users.first.login != @user.login)
+      deny_access
+      end
+    else
+      deny_access
+    end
   end
 
 
