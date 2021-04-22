@@ -9,8 +9,10 @@
 <% end %>
 <h2>Adresses</h2>
 <nav>
-    <a href="<%= addressesP_path(1) %>" type="button" class="btn btn-light">Gestion Adresses</a>
+    <a href="<%= ordersAdmin_path(1) %>" type="button" class="btn btn-light">Commandes</a>
     <a href="<%= devicesP_path(1) %>" type="button" class="btn btn-light">Modules</a>
+    <a href="<%= searchOrders_path() %>" type="button" class="btn btn-light">Recherche</a>
+
 </nav>
 
     <div class="box">
@@ -38,12 +40,12 @@
   <% @addresses.each do |mod| %>
   <tbody>
     <tr id="row_<%=mod.id%>">
-      <td><%= mod.id %></td>
-      <td><%= mod.name %></td>
-      <td><%= mod.localisation %></td>
-      <td><%= link_to "Supprimer", address_path(mod),
+      <th><%= mod.id %></th>
+      <th><%= mod.name %></th>
+      <th><%= mod.localisation %></th>
+      <th><%= link_to "Supprimer", address_path(mod),
                   method: :delete,
-                  data: { confirm: "etes vous sûr?" } %></td>
+                  data: { confirm: "etes vous sûr?" } %></th>
     </tr>
   </tbody>
   <% end %>
