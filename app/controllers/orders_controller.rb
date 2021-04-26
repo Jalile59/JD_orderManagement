@@ -199,13 +199,30 @@ class OrdersController < ApplicationController
 
     groupCommandeSav = Group.where(lastname: "commandeSAV").first
 
+    #abort(groupCommandeSav.users.all.login.to_s)
+    #
+    result = userInGroup(groupCommandeSav.users, @user)
+    puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>"+result.to_s
     if(groupCommandeSav.users.length() > 0)
-      if(groupCommandeSav.users.first.login != @user.login)
-      deny_access
+      if(result != true)
+        deny_access
       end
     else
       deny_access
     end
+  end
+  
+  def userInGroup(listeData, usercurrent)
+
+    for user in listeData
+      if user.login == usercurrent.login
+        return true
+      end
+
+    end
+
+    return false
+    
   end
 
 

@@ -8,7 +8,6 @@
 
 <h2 style="margin: 20px">Formulaire Edition: <strong>#<%= @order.id %></strong></h2>
 <%= button_to "Retour", ordersP_path, :page => 1, :project_id => @order.project, :method => :get %>
-<%= button_to "Modifier", ordersP_path, :page => 1, :project_id => @order.project, :method => :get %>
 
 
 <%= form_for @order,  :url => {:action => "update", :id => @order.id, project_id: @order.project}  do |form| %>
