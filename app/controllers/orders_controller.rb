@@ -72,7 +72,7 @@ class OrdersController < ApplicationController
         end
       end
 
-
+    @order.dateUptaded = Time.now
      if @order.update(device_params)
     #redirect_to orders_path, project_id: @order.project.to_s
       redirect_to controller: 'orders', action: 'index', project_id: @order.project.to_s
