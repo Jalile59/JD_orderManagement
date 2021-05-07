@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
 
-  before_action :checkIfUserAllow
+  before_action :checkIfUserAllow, except:[:fixtures]
 
   def index
     @project_id = params[:project_id]

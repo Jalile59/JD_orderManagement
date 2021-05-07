@@ -16,7 +16,9 @@ get 'orders/editAddviewForm/:id/:project_id',           to: 'orders#editAddviewF
 get 'orders/editAddviewForm/deleded/deviceOrders/:id',  to: 'orders#delAjaxrequet',             as:'deletedDeviceOrder'
 get 'search/orders',                                    to: 'searchs#index',                    as: 'searchOrders'
 post 'search/orders',                                   to: 'searchs#index',                    as: 'searchOrders_post'
-get 'orders/api',                                       to: 'api_order#createIssuesApi',         as: 'apipostissues'
+get 'orders/api/checkOldOrder',                         to: 'api_order#checkifDayIsExpired',    as: 'apipostissues'
+get 'parameter',                                        to: 'parameters#index',                 as: 'paramEdit'
+post 'parameter/update',                                to: 'parameters#update',                as: 'paramUpdate'
 
 resources :devices
 resources :device_bytrack

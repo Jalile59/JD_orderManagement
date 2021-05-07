@@ -1,0 +1,30 @@
+<h2>Setting plugin:</h2>
+
+<div class="box tabular settings">
+<%= puts ENV['HOST'] %>
+  <%= form_with url: "parameter/update", method: :post do |form| %>
+    <div class="row">
+      <p class="col-3">
+      <p><%= form.label :query, "Utilisateur assigné au ticket:" %></p>
+      <p><%= collection_select(:userassigned, :id, User.all, :id, :lastname, prompt: "Selectionner utilisateur") %></p>
+    </div>
+    <div class="col-3">
+      <p><%= form.label :query, "Key API Redmine:" %></p>
+      <p><%= form.text_field :keyAPI_redmine, value: @keyAPI_redmine.value %></p>
+    </div>
+    <div class="col-3">
+      <p><%= form.label :query, "Key API DHL" %></p>
+      <p><%= form.text_field :keyAPI_dhl, value: @keyAPI_dhl.value %></p>
+    </div>
+
+    <div class="col-3">
+      <p><%= form.label :query, "Delais création ticket (jours):" %></p>
+      <p><%= form.text_field :dayRecall, value: @dayRecall.value %></p>
+    </div>
+    <div class="col-3">
+      <p><%= form.submit "Sauvegarder" %></p>
+    </div>
+    </div>
+  <% end %>
+
+  </div>

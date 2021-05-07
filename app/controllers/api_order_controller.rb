@@ -1,46 +1,72 @@
 class ApiOrderController < ApplicationController
 
-  def createIssuesApi()
+  def createIssuesApi(order, olddays)
 
+    keyApi = Parameter.where(name:'keyAPI_redmine').first
+    userId = Parameter.where(name:'userAssigned').first
+    host = "http://"+ENV['host']
+    #host = "http://192.168.1.26"
 
-    uri = "http://192.168.1.26/issues.json?key=0756441090cfe440c2d237fd945a1dd48ef43f9a"
-    uriGet =  "http://192.168.1.26/issues.json?key=89f4699970d57ee28c1c63b9bff83e96fe5f613d"
-
+    uri = host+"/issues.json?key="+keyApi.value
     issue = {
       "issue": {
-        "project_id": 2,
-        "subject": "obj",
+        "project_id": 1,
+        "subject": "commande n°:"+order.id.to_s+" delais dépassé.",
         "priority_id":1,
         "tracker_id":1,
-        "assigned_to_id":1,
-        "description": "une description"
+        "assigned_to_id":userId,
+        "description": "le order traking numero: "+order.id.to_s+" à destination de "+order.destination.to_s+" n'a pas était mis à jours depuis "+olddays.abs.round.to_s+" jours,/n veuillez verifier <a href:'#'>cette commande</a> ."
       }
     }
 
-    objIssue = Issue.create(project_id: 2,
-                            subject: "obj",
-                            priority_id:1,
-                            tracker_id:1,
-                            assigned_to_id:1,
-                            description: "une description"
-    )
-    puts("=>>>>>>>>>>>>>>>>>>>>>>>"+objIssue.to_json)
-
     header = {
       'Content-Type' => 'application/json',
-      'X-Redmine-API-Key'=> '0756441090cfe440c2d237fd945a1dd48ef43f9a'
+      'X-Redmine-API-Key'=> keyApi.value
     }
 
     response =  HTTParty.post(uri,
                               :body => issue.to_json,
                               :headers => header)
 
+    if (response.code == 200)
+      render json: issue
+    elsif (response.code == 401)
+      render json:  {
+        error: "unauthorized",
+        status: 401
+      }
 
-    abort(response.inspect)
-    render :nothing => true, :status => 200
-
-
+    end
   end
+
+  def checkifDayIsExpired()
+    days = Parameter.where(name:'dayRecall').first
+
+    @orders = Order.all
+    issuscreated = 0
+    @orders.each do |obj|
+
+      if(obj.dateUptaded.nil?)
+        oldDays = obj.dateCreated - Time.now
+        puts '>>>>>>>>>>> days old created = '+(oldDays/86400).abs.round.to_s
+      else
+        oldDays = obj.dateUptaded - Time.now
+        puts '>>>>>>>>>>> days old updated = '+(oldDays/86400).abs.round.to_s
+      end
+
+      if ((oldDays/86400).abs >= days.value.to_i)
+        createIssuesApi(obj, (oldDays/86400))
+        issuscreated = issuscreated +1
+      end
+
+    end
+
+    render json:  {
+      issuecreated: issuscreated,
+      status: 200
+    }
+  end
+
 
 
 

@@ -28,25 +28,49 @@ class Tools
     end
 
     def addFixtures
-        @dv01 = Device.new(codearticle: 'KJHGB65', name: 'lecteur aimant', designation: 'A14', project: 'tsa');
-        @dv02 = Device.new(codearticle: 'GHDZSQ', name: 'Gyro', designation: 'A13', project: 'tsa');
 
-        @status01 = StatusOrder.new(name: 'En cours')
-        @status02 = StatusOrder.new(name: 'cloturée')
-        @status03 = StatusOrder.new(name: 'En attente')
+        if (Parameter.where(name:'keyAPI_redmine').first.nil?)
+            @paramKeyApi = Parameter.new(name: 'keyAPI_redmine', value: '')
+            @paramKeyApi.save
+        end
 
-        @ad01 = Addresse.new(name: 'Linz', localisation: '25 rue de la paix');
-        @ad02 = Addresse.new(name: 'Gonesse', localisation: '12 rue foch');
+        if (Parameter.where(name:'userAssigned').first.nil?)
+            @paramUserassignedTicket = Parameter.new(name: 'userAssigned', value: '')
+            @paramUserassignedTicket.save
+        end
 
-        @dv01.save
-        @dv02.save
+        if (Parameter.where(name:'dayRecall').first.nil?)
+            @dayRecall = Parameter.new(name: 'dayRecall', value: '')
+            @dayRecall.save
+        end
 
-        @ad01.save
-        @ad02.save
+        if (Parameter.where(name:'keyAPI_dhl').first.nil?)
+            @keyApiDhl = Parameter.new(name: 'keyAPI_dhl', value: '')
+            @keyApiDhl.save
+        end
 
-        @status01.save
-        @status02.save
-        @status03.save
+        if (Group.where(lastname:'commandeSAV').first.nil?)
+            @group = Group.new(lastname: 'commandeSAV')
+            @group.save
+        end
+
+        if (StatusOrder.where(name:'En cours').first.nil?)
+            @status01 = StatusOrder.new(name: 'En cours')
+            @status01.save
+        end
+
+        if (StatusOrder.where(name:'En cours').first.nil?)
+            @status02 = StatusOrder.new(name: 'cloturée')
+            @status02.save
+        end
+
+
+
+
+
+
+
+
     end
 
 
