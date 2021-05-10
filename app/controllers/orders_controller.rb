@@ -104,14 +104,14 @@ class OrdersController < ApplicationController
     time= Time.now.localtime
      @order.dateCreated = time
     arrayss = params[:codearticle]
-    # abort(Time.now.to_s)
+    # abort(params.inspect)
     @order.save
-
+    i=0
     if params.include? (:codearticle)
       arrayss.each  do  |n| 
         @moduleD = Device.where(codearticle: n).first
         puts 'moduleId='+@moduleD.id.to_s
-        i=0
+
 
         @deviceByOrd = DeviceBytrack.new(
           device_id: @moduleD.id,
