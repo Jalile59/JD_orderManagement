@@ -12,7 +12,7 @@ class ApiOrderController < ApplicationController
     issue = {
       "issue": {
         "project_id": 1,
-        "subject": "commande n°:"+order.id.to_s+" delais dépassé.",
+        "subject": "Commande n°:"+order.id.to_s+" delais dépassé.",
         "priority_id":1,
         "tracker_id":1,
         "assigned_to_id":userId,
