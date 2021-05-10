@@ -2,7 +2,7 @@ Redmine::Plugin.register :jd_order_management do
   name 'JD Traking Order Management plugin'
   author 'DJELLOULI JALILE'
   description 'this plugin is used for tracking of order '
-  version '0.0.1'
+  version '1.0.0'
   url 'http://example.com/path/to/plugin'
   author_url 'http://example.com/about'
 
