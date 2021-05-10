@@ -27,4 +27,9 @@ gem httparty:
  - Active API_REST in Redmine parametre:
 	-> enable the API-style authentication, you have to check Enable REST API in Administration -> Settings -> API 
 	
-	
+####################################
+
+migration:
+
+-> command: RAILS_ENV=production rake redmine:plugins:migrate
+-> command: RAILS_ENV=development rake redmine:plugins:migrate	
