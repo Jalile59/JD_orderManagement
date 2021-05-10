@@ -8,7 +8,8 @@
 
 <h2 style="margin: 20px">Suivi: <strong>#<%= @order.id %></strong></h2>
 
-<%= button_to "retour", ordersP_path, :page => 1, :project_id => @order.project, :method => :get %>
+<%= button_to "Retour", ordersP_path, :page => 1, :project_id => @order.project, :method => :get %>
+<%= button_to "Modifier", edit_order_path, :page => 1, :project_id => @order.project, :method => :get %>
 
 <%= form_for @order  do |form| %>
   <div class="form-row box">
@@ -24,7 +25,7 @@
         <%= form.date_field  :dateSending, class: 'form-control', value:@order.dateSending , :readonly => true  %>
       </div>
       <div class="col-3">
-        <%= form.text_field :numberDHL, class: 'form-control', placeholder:'Numéro DHL', value:@order.serialNum,  :readonly => true %>
+        <%= form.text_field :numberDHL, class: 'form-control', placeholder:'Numéro DHL', value:@order.numberDHL,  :readonly => true %>
       </div>
 
       <%= form.label :utilisateur, class: 'form-label' %>

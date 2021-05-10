@@ -12,6 +12,7 @@
 <%# User.current.inspect %>
 <a href="<%=  new_order_path(@project_id) %>" type="button" class="btn btn-light">+ création</a>
 <div class="box">
+
   <table class="table">
     <thead class="thead-dark">
       <tr>
@@ -36,7 +37,7 @@
     <% elsif StatusOrder.find(orderTrack.statusOrders_id).name == 'En attente' %>
         lowPriority
     <% end %>
-        ", url ="<%=ENV['HOST'] %>", ids="<%= orderTrack.id %>", project="<%= orderTrack.project %>" onclick="redirectToderail(this)">
+        ", url ="<%=ENV['HOST'] %>", ids="<%= orderTrack.id %>", url="<%= request.host_with_port.dup.inspect %>" project="<%= orderTrack.project %>" onclick="redirectToderail(this)">
         <td><%= orderTrack.id %></td>
         <td><%= orderTrack.project %></td>
         <td><%= orderTrack.dateCreated.in_time_zone('Paris') %></td>
