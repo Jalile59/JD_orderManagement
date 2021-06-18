@@ -33,3 +33,16 @@ migration:
 
 -> command: RAILS_ENV=production rake redmine:plugins:migrate
 -> command: RAILS_ENV=development rake redmine:plugins:migrate	
+
+#####################################
+
+add data csv:
+
+mysql command:
+
+LOAD DATA LOCAL INFILE '/home/redmine/plugins/modules.csv'
+INTO TABLE devices
+FIELDS TERMINATED BY ';'
+ENCLOSED BY '"'
+LINES TERMINATED BY '/n'
+IGNORE 1 ROWS;
