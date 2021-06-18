@@ -35,7 +35,7 @@ class Tools
         end
 
         if (Parameter.where(name:'userAssigned').first.nil?)
-            @paramUserassignedTicket = Parameter.new(name: 'userAssigned', value: '')
+            @paramUserassignedTicket = Parameter.new(name: 'userAssigned', value: 1)
             @paramUserassignedTicket.save
         end
 
@@ -59,10 +59,26 @@ class Tools
             @status01.save
         end
 
-        if (StatusOrder.where(name:'En cours').first.nil?)
-            @status02 = StatusOrder.new(name: 'cloturée')
+        if (StatusOrder.where(name:'Attente retour').first.nil?)
+            @status02 = StatusOrder.new(name: 'Attente retour')
             @status02.save
         end
+
+        if (StatusOrder.where(name:'cloturée').first.nil?)
+            @status03 = StatusOrder.new(name: 'cloturée')
+            @status03.save
+        end
+
+        if (StatusOrder.where(name:'Non réparable').first.nil?)
+            @status03 = StatusOrder.new(name: 'Non réparable')
+            @status03.save
+        end
+
+        if (StatusOrder.where(name:'Réparé').first.nil?)
+            @status03 = StatusOrder.new(name: 'Réparé')
+            @status03.save
+        end
+
 
 
 
