@@ -1,0 +1,39 @@
+<h2>ActivityOrderController#create</h2>
+
+<%= render :file => "orders/show" %>
+
+<div class="form-row box">
+<%= form_for @order  do |form| %>
+  <div class="row">
+    <div class="col-3">
+      <div class="col-6">
+        <div class="col-6">
+          <label class="label">Status:</label>
+        </div>
+        <%= collection_select(:order, :statusOrders_id, StatusOrder.all, :id, :name, prompt: "Selectionner status") %>
+      </div>
+      <div class="col-6">
+        <div class="col-6">
+          <label class="label">Source:</label>
+        </div>
+        <%= collection_select(:order, :source,          Addresse.all, :name, :name, prompt: "Selectionner une source", required: true) %>
+        <div class="col-6">
+          <label class="label">Destination:</label>
+          <%= collection_select(:order, :destination,     Addresse.all, :name, :name, prompt: "Selectionner une destination", required: true) %>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="col-6">
+        <label class="label">description:</label>
+      </div>
+      <div class="col-6">
+        <textarea id="w3review" name="w3review" rows="4" cols="50"> </textarea>
+      </div>
+    </div>
+
+ </div>
+</div>
+
+
+<% end %>

@@ -24,3 +24,4 @@ resources :devices
 resources :device_bytrack
 resources :addresses
 resources :orders, path: '/projects/:project_id/order'
+resources :activity_order, path: '/projects/:project_id/order/:id/activity'

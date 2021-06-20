@@ -42,7 +42,7 @@
         <td><%= orderTrack.project %></td>
         <td><%= orderTrack.dateCreated.in_time_zone('Paris') %></td>
         <td><%= orderTrack.dateSending %></td>
-        <td><%= orderTrack.description %></td>
+        <td><%= orderTrack.description.truncate(30) %></td>
         <td><%= orderTrack.source %></td>
         <td><%= orderTrack.destination %></td>
         <td><%= StatusOrder.find(orderTrack.statusOrders_id).name %></td>
