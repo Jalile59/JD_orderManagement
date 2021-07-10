@@ -10,6 +10,8 @@
 
 <%= button_to "Retour", ordersP_path, :page => 1, :project_id => @order.project, :method => :get %>
 <%= button_to "Modifier", edit_order_path, :page => 1, :project_id => @order.project, :method => :get %>
+<%= button_to "Ajouter", new_activity_order_path, :project_id => @order.project, :id => @order.id, :method => :get %>
+
 
 <%= form_for @order  do |form| %>
   <div class="form-row box">
